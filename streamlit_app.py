@@ -282,6 +282,9 @@ for i, value in enumerate(values):
 
 # Inverting the plot to make it look like a funnel
 ax.invert_yaxis()
+# Adding data labels
+for i, value in enumerate(values):
+    ax.text(value, i, f'  {int(value):,}', va='center', color='black', fontweight='bold')
 
 
 ax.set_xlabel('Number of Texts/Votes')
@@ -303,7 +306,7 @@ muslim_votes = 3488
 
 # Creating the funnel chart
 st.title("Text 2 Campaign")
-fig, ax = plt.subplots(figsize=(6, 4))  # Smaller figure size for focus
+fig, ax = plt.subplots(figsize=(10, 4))  # Smaller figure size for focus
 
 # Values and labels
 stages = ['Total Texts Sent', 'Muslims Voted']
