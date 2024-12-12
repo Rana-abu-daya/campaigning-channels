@@ -327,7 +327,7 @@ ax.invert_yaxis()
 for i, value in enumerate(values):
     # Position the label based on the value's size and the bar's length
     text_position = value - (value * 0.03)  # 3% back from the end of the bar
-    ax.text(text_position, i, f'{int(value):,}', va='center', color='white', fontweight='bold')
+    ax.text(text_position, i, f'{int(value):,}', va='center', color='black', fontweight='bold')
 
 ax.set_xlabel('Number of Texts/Votes')
 ax.set_title('Conversion from Texts to Votes')
@@ -339,7 +339,7 @@ col1, col2 = st.columns(2)
 # First Pie Chart: Percentage of Muslims texted
 with col1:
     st.subheader("Percentage of Muslims Texted")
-    labels = ['Muslims Texted', 'Others']
+    labels = [f'Muslims Texted: {muslim_texted}', f'Others: {total_texts - muslim_texted}']
     sizes = [muslim_texted, total_texts - muslim_texted]
     colors = ['lightgreen', 'grey']
     fig1, ax1 = plt.subplots()
@@ -350,7 +350,7 @@ with col1:
 # Second Pie Chart: Percentage of Muslims who voted from those texted
 with col2:
     st.subheader("Percentage of Muslims Voted from Texted")
-    labels = ['Muslims Voted', 'Muslims Not Voted']
+    labels = [f'Muslims Voted: {muslim_votes}', f'Muslims Not Voted: {muslim_texted-muslim_votes}']
     sizes = [muslim_votes, muslim_texted - muslim_votes]
     colors = ['lightcoral', 'lightgrey']
     fig2, ax2 = plt.subplots()
