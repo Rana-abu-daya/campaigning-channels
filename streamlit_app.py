@@ -225,11 +225,11 @@ st.pyplot(fig)
 # Second Chart: Pie chart for completed vs other results
 completed = results['completed']
 other_results = sum(results.values()) - completed
-labels = [f"Completed {results['completed']}", f"Other Results {sum(results.values()) - results['completed']}"]
+labels = [f"Completed: {results['completed']}", f"Other Results: {sum(results.values()) - results['completed']}"]
 sizes = [completed, other_results]
 
 fig1, ax1 = plt.subplots()
-ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=['green', 'red'])
+ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=['light blue', 'light green'])
 ax1.axis('equal')
 st.subheader("Proportion of Completed Calls")
 st.pyplot(fig1)
