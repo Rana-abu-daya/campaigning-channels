@@ -74,9 +74,12 @@ ethnicity_counts = {
     'Jordan': 1
 }
 
-# Total number of valid voters
+# Total number of valid voters (assuming it's 315 from your context)
 votes_cast = 315
-votes_remaining = 423 - votes_cast
+votes_remaining = 423 - votes_cast  # Assuming total voters is 423
+
+# Setting up the Streamlit title
+st.title("Captain Voting Statistics")
 
 # Display the pie chart for Ethnicity classification
 st.title("Captain Voting Statistics")
@@ -101,3 +104,21 @@ ax2.legend(
     title="Ethnicities"
 )
 st.pyplot(fig2)
+
+# Pie chart for overall voting progress
+st.subheader("Overall Voting Progress")
+fig1, ax1 = plt.subplots()
+ax1.pie(
+    [votes_cast, votes_remaining],
+    labels=["Votes Cast", "Votes Remaining"],
+    autopct="%1.1f%%",
+    startangle=90,
+    colors=["#1f77b4", "#ff7f0e"]
+)
+ax1.axis('equal')
+st.pyplot(fig1)
+
+# Summary information
+st.write(f"Total Voters: 423")
+st.write(f"Votes Cast: {votes_cast}")
+st.write(f"Votes Remaining: {votes_remaining}")
