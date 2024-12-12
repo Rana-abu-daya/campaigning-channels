@@ -284,7 +284,7 @@ for i, value in enumerate(values):
 ax.invert_yaxis()
 # Adding data labels
 for i, value in enumerate(values):
-    ax.text(value, i, f'  {int(value):,}', va='right', color='black', fontweight='bold')
+    ax.text(value, i, f' {int(value):,}', va='center', color='black', fontweight='bold')
 
 
 ax.set_xlabel('Number of Texts/Votes')
