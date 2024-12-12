@@ -225,7 +225,7 @@ st.pyplot(fig)
 # Second Chart: Pie chart for completed vs other results
 completed = results['completed']
 other_results = sum(results.values()) - completed
-labels = ['Completed', 'Other Results']
+labels = [f"Completed {results['completed']}", f"Other Results {sum(results.values()) - results['completed']}"]
 sizes = [completed, other_results]
 
 fig1, ax1 = plt.subplots()
