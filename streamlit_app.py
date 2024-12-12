@@ -208,7 +208,7 @@ results = {
 st.title("Phone Banking Campaign Analysis")
 # Bar chart for phone banking campaign results
 st.subheader("Detailed Campaign Results")
-fig, ax = plt.subplots(figsize=(8, 3))  # Further reduced height to ensure visibility within the frame
+fig, ax = plt.subplots(figsize=(10, 4))  # Further reduced height to ensure visibility within the frame
 #fig, ax = plt.subplots()
 bars = ax.bar(results.keys(), results.values(), color='skyblue')
 
@@ -258,3 +258,31 @@ st.write("Summary Information")
 st.write(f"Total Calls: {sum(results.values())}")
 st.write(f"Total Completed Calls: {completed}")
 st.write(f"Total Muslim Votes: {muslim_voted}")
+
+#####################3  PRIVATE FUNCTIONS #################
+
+# Data for the text campaign
+total_texts = 29125
+muslim_votes = 3304
+
+# Creating the bar chart for the text campaign results
+st.title("Text Campaign Results")
+st.subheader("Overview of Text Campaign Effectiveness")
+fig, ax = plt.subplots(figsize=(8, 6))  # Adjust size to fit your layout preference
+labels = [f'Total Texts Sent:{total_texts}', f'Muslims Voted:{muslim_votes}']
+values = [total_texts, muslim_votes]
+bars = ax.bar(labels, values, color=['skyblue', 'lightgreen'])
+
+# Adding numbers on top of each bar for clarity
+for bar in bars:
+    yval = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width()/2, yval, f'{int(yval):,}', va='bottom', ha='center')
+
+ax.set_ylabel('Number of Texts/Votes')
+ax.set_title('Results of Text 1 Campaign')
+st.pyplot(fig)
+
+# Summary information
+st.write("Summary Information")
+st.write(f"Total Texts Sent: {total_texts:,}")
+st.write(f"Total Muslim Votes: {muslim_votes:,}")
