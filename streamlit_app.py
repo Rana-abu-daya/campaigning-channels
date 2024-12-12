@@ -142,24 +142,24 @@ votes_remaining = 423 - votes_cast
 # Setting up the Streamlit title
 st.title("Captain Voting Statistics")
 
-# Using beta_columns to create a layout for side by side pie charts
-col1, col2 = st.beta_columns(2)
+# Using columns to create a layout for side by side pie charts
+col1, col2 = st.columns(2)
 
 # First column for ethnicity distribution pie chart
 with col1:
-    st.subheader("Captains' Voted Voters Distribution by Ethnicity")
+    st.subheader("Voter Distribution by Ethnicity")
     fig2, ax2 = plt.subplots(figsize=(8, 6))
     ax2.pie(
         ethnicity_counts.values(),
         startangle=90,
         colors=["#2ca02c", "#d62728", "#9467bd", "#8c564b", "#ff7f0e", "#1f77b4", "#8c564b", "#7f7f7f", "#c7c7c7"],
         pctdistance=0.85,
-        explode=[0.1, 0, 0, 0, 0, 0, 0, 0, 0],
-        textprops={'fontsize': 10}
+        explode=[0.1, 0, 0, 0, 0, 0, 0, 0, 0],  # Explode the largest slice slightly
+        textprops={'fontsize': 10}  # Adjust font size for better visibility
     )
     centre_circle = plt.Circle((0,0),0.70, fc='white')
     fig2.gca().add_artist(centre_circle)
-    ax2.axis('equal')
+    ax2.axis('equal')  # Ensure the pie chart is circular
     ax2.legend(
         ethnicity_counts.keys(),
         loc='center left',
@@ -170,14 +170,14 @@ with col1:
 
 # Second column for overall voting progress pie chart
 with col2:
-    st.subheader("Captains Voting Progress")
+    st.subheader("Overall Voting Progress")
     fig1, ax1 = plt.subplots(figsize=(8, 6))
     ax1.pie(
         [votes_cast, votes_remaining],
-        labels=["Voted", "Not Voted"],
+        labels=["Votes Cast", "Votes Remaining"],
         autopct="%1.1f%%",
         startangle=90,
         colors=["#1f77b4", "#ff7f0e"]
     )
-    ax1.axis('equal')
+    ax1.axis('equal')  # Equal aspect ratio ensures pie chart is circular
     st.pyplot(fig1)
