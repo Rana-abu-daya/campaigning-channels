@@ -294,3 +294,42 @@ st.pyplot(fig)
 st.write("Summary Information")
 st.write(f"Total Texts Sent: {total_texts:,}")
 st.write(f"Total Muslim Votes: {muslim_votes:,}")
+
+
+
+################################################################
+
+
+
+# Data for the campaign
+total_texts = 12090
+muslim_votes = 3488
+
+# Creating the funnel chart
+st.title("Text 2 Campaign")
+fig, ax = plt.subplots(figsize=(6, 4))  # Smaller figure size for focus
+
+# Values and labels
+stages = ['Total Texts Sent', 'Muslims Voted']
+values = [total_texts, muslim_votes]
+colors = ['lightred', 'lightgreen']
+
+# Plotting a horizontal bar chart as a funnel
+for i, value in enumerate(values):
+    ax.barh(stages[i], value, color=colors[i], align='center', edgecolor='black')
+
+# Inverting the plot to make it look like a funnel
+ax.invert_yaxis()
+
+# Adding data labels
+for i, value in enumerate(values):
+    ax.text(value, i, f'  {int(value):,}', va='center', color='black', fontweight='bold')
+
+ax.set_xlabel('Number of Texts/Votes')
+ax.set_title('Conversion from Texts to Votes')
+st.pyplot(fig)
+
+# Summary information
+st.write("Summary Information")
+st.write(f"Total Texts Sent: {total_texts:,}")
+st.write(f"Total Muslim Votes: {muslim_votes:,}")
