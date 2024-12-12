@@ -61,22 +61,42 @@
 import streamlit as st
 import matplotlib.pyplot as plt
 
-# Fixed values for voters and votes
-total_voters = 423  # Total voters for captains
-votes_cast = 315    # Number of votes cast (Accepted or Challenged)
-votes_remaining = total_voters - votes_cast
-
-# Example captain vote data (you can replace this with real data or customize it)
-captain_votes = {
-    "Captain A": 100,
-    "Captain B": 80,
-    "Captain C": 70,
-    "Captain D": 65
+# Hardcoded Ethnicity Counts (as per your request)
+ethnicity_counts = {
+    'Bangladesh': 160,
+    'Pakistan': 87,
+    'Palestine': 38,
+    'Egypt': 15,
+    'India': 11,
+    'Brunei': 1,
+    'Ethiopia': 1,
+    'Somalia': 1,
+    'Jordan': 1
 }
 
-# Display pie chart for overall voting progress
+# Total number of valid voters (from your request, assuming it's 315)
+votes_cast = 315
+votes_remaining = 423 - votes_cast  # Assuming total voters is 423
+
+# Display the Ethnicity Counts in the console
+print("Ethnicity Counts:", ethnicity_counts)
+
+# Display the pie chart for Ethnicity classification
 st.title("Captain Voting Statistics")
 
+st.subheader("Voter Distribution by Ethnicity")
+fig2, ax2 = plt.subplots()
+ax2.pie(
+    ethnicity_counts.values(),
+    labels=ethnicity_counts.keys(),
+    autopct="%1.1f%%",
+    startangle=90,
+    colors=["#2ca02c", "#d62728", "#9467bd", "#8c564b", "#ff7f0e", "#1f77b4", "#8c564b", "#7f7f7f", "#c7c7c7"]
+)
+ax2.axis("equal")  # Equal aspect ratio ensures pie chart is circular.
+st.pyplot(fig2)
+
+# Pie chart for overall voting progress
 fig1, ax1 = plt.subplots()
 ax1.pie(
     [votes_cast, votes_remaining],
@@ -88,21 +108,7 @@ ax1.pie(
 ax1.axis("equal")  # Equal aspect ratio ensures pie chart is circular.
 st.pyplot(fig1)
 
-# Pie chart for captain votes
-if captain_votes:
-    st.subheader("Votes by Captain")
-    fig2, ax2 = plt.subplots()
-    ax2.pie(
-        captain_votes.values(),
-        labels=captain_votes.keys(),
-        autopct="%1.1f%%",
-        startangle=90,
-        colors=["#2ca02c", "#d62728", "#9467bd", "#8c564b"]
-    )
-    ax2.axis("equal")
-    st.pyplot(fig2)
-
-# Summary
-st.write(f"Total Voters: {total_voters}")
+# Summary displayed in the app
+st.write(f"Total Voters: 423")
 st.write(f"Votes Cast: {votes_cast}")
 st.write(f"Votes Remaining: {votes_remaining}")
