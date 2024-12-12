@@ -85,14 +85,22 @@ print("Ethnicity Counts:", ethnicity_counts)
 st.title("Captain Voting Statistics")
 
 st.subheader("Voter Distribution by Ethnicity")
-fig2, ax2 = plt.subplots()
+fig2, ax2 = plt.subplots(figsize=(10, 8))  # Increase figure size for better clarity
 ax2.pie(
     ethnicity_counts.values(),
     labels=ethnicity_counts.keys(),
     autopct="%1.1f%%",
     startangle=90,
-    colors=["#2ca02c", "#d62728", "#9467bd", "#8c564b", "#ff7f0e", "#1f77b4", "#8c564b", "#7f7f7f", "#c7c7c7"]
+    colors=["#2ca02c", "#d62728", "#9467bd", "#8c564b", "#ff7f0e", "#1f77b4", "#8c564b", "#7f7f7f", "#c7c7c7"],
+    pctdistance=0.85,  # Place percentages a little farther from the center
+    explode=[0.1, 0, 0, 0, 0, 0, 0, 0, 0],  # Slightly explode the largest slice (Bangladesh)
+    textprops={'fontsize': 10}  # Reduce font size to avoid overlap
 )
+
+# Draw the center circle to make the pie chart look like a donut
+centre_circle = plt.Circle((0,0),0.70,fc='white')
+fig2.gca().add_artist(centre_circle)
+
 ax2.axis("equal")  # Equal aspect ratio ensures pie chart is circular.
 st.pyplot(fig2)
 
