@@ -269,7 +269,7 @@ muslim_votes = 3304
 
 # Creating the funnel chart
 st.title("Text 1 Campaign ")
-fig, ax = plt.subplots(figsize=(10, 4))  # Adjust size to fit within the visual frame
+fig, ax = plt.subplots(figsize=(8, 4))  # Adjust size to fit within the visual frame
 
 # Values and labels
 stages = ['Total Texts Sent', 'Muslims Voted']
@@ -287,7 +287,7 @@ ax.invert_yaxis()
 for i, value in enumerate(values):
     # Adjust text placement to fit within the bar, accounting for smaller widths
     text_position = value - (value * 0.05)  # Adjust this factor based on your preference and the value size
-    ax.text(text_position, i, f'{int(value):,}', va='center', color='white', fontweight='bold')
+    ax.text(text_position, i, f'{int(value):,}', va='center', color='black', fontweight='bold')
 
 ax.set_xlabel('Number of Texts/Votes')
 ax.set_title('Conversion from Texts to Votes')
