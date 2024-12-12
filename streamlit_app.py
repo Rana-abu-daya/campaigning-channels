@@ -272,7 +272,7 @@ st.title("Text 1 Campaign Analysis")
 st.subheader("Effectiveness of Campaign Targeting Muslims")
 
 # Creating the funnel chart
-fig, ax = plt.subplots(figsize=(10, 5))  # Adjust size to your preference
+fig, ax = plt.subplots(figsize=(10, 4))  # Adjust size to your preference
 
 # Values and labels for the funnel chart
 stages = ['Total Texts Sent', 'Muslims Texted', 'Muslims Voted']
