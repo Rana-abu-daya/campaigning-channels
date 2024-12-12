@@ -266,31 +266,9 @@ total_texts = 29125
 muslim_votes = 3304
 
 # Creating the bar chart for the text campaign results
-st.title("Text Campaign Results")
+st.title("Text 1 Campaign Results")
 st.subheader("Overview of Text Campaign Effectiveness")
-fig, ax = plt.subplots(figsize=(8, 6))  # Adjust size to fit your layout preference
-labels = [f'Total Texts Sent:{total_texts}', f'Muslims Voted:{muslim_votes}']
-values = [total_texts, muslim_votes]
-bars = ax.bar(labels, values, color=['skyblue', 'lightgreen'])
-
-# Adding numbers on top of each bar for clarity
-for bar in bars:
-    yval = bar.get_height()
-    ax.text(bar.get_x() + bar.get_width()/2, yval, f'{int(yval):,}', va='bottom', ha='center')
-
-ax.set_ylabel('Number of Texts/Votes')
-ax.set_title('Results of Text 1 Campaign')
-st.pyplot(fig)
-
-# Summary information
-st.write("Summary Information")
-st.write(f"Total Texts Sent: {total_texts:,}")
-st.write(f"Total Muslim Votes: {muslim_votes:,}")
-
-
-# Creating the funnel chart
-st.title("Text Campaign Funnel Analysis")
-fig, ax = plt.subplots(figsize=(6, 4))  # Smaller figure size for focus
+fig, ax = plt.subplots(figsize=(6, 3))  # Smaller figure size for focus
 
 # Values and labels
 stages = ['Total Texts Sent', 'Muslims Voted']
