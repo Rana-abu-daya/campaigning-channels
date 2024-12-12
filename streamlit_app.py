@@ -147,7 +147,7 @@ col1, col2 = st.columns(2)
 
 # First column for ethnicity distribution pie chart
 with col1:
-    st.subheader("Voter Distribution by Ethnicity")
+    st.subheader("Voted Voters Distribution by Ethnicity")
     fig2, ax2 = plt.subplots(figsize=(8, 6))
     ax2.pie(
         ethnicity_counts.values(),
@@ -174,10 +174,16 @@ with col2:
     fig1, ax1 = plt.subplots(figsize=(8, 6))
     ax1.pie(
         [votes_cast, votes_remaining],
-        labels=["Votes Cast", "Votes Remaining"],
+        labels=["Voted", "Not Voted"],
         autopct="%1.1f%%",
         startangle=90,
         colors=["#1f77b4", "#ff7f0e"]
     )
     ax1.axis('equal')  # Equal aspect ratio ensures pie chart is circular
     st.pyplot(fig1)
+
+# Summary information
+st.write("Summary Information")
+st.write(f"Total Voters of Captains: 423")
+st.write(f"Voted: {votes_cast}")
+st.write(f"Not Voted: {votes_remaining}")
