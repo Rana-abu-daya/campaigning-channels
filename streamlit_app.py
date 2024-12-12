@@ -205,9 +205,19 @@ results = {
 
 # First Chart: Bar chart for phone banking campaign results
 st.title("Phone Banking Campaign Analysis")
+# Bar chart for phone banking campaign results
 st.subheader("Detailed Campaign Results")
 fig, ax = plt.subplots()
-ax.bar(results.keys(), results.values(), color='skyblue')
+bars = ax.bar(results.keys(), results.values(), color='skyblue')
+
+# Adding numbers on top of each bar
+for bar in bars:
+    yval = bar.get_height()
+    ax.text(bar.get_x() + bar.get_width()/2, yval, int(yval), va='bottom', ha='center')  # Adjust alignment for better visibility
+
+# Rotate x-axis labels for better readability
+plt.xticks(rotation=45, ha="right")  # Rotate the x-axis labels for better visibility
+
 ax.set_ylabel('Number of Calls')
 ax.set_title('Results of Phone Banking Campaign')
 st.pyplot(fig)
