@@ -268,7 +268,7 @@ total_texts = 29125
 muslim_votes = 3304
 
 # Creating the funnel chart
-st.title("Text Campaign Funnel Analysis")
+st.title("Text 1 Campaign")
 fig, ax = plt.subplots(figsize=(10, 4))  # Adjust size to fit within the visual frame
 
 # Values and labels
@@ -283,16 +283,6 @@ for i, value in enumerate(values):
 # Inverting the plot to make it look like a funnel
 ax.invert_yaxis()
 
-# Adding data labels appropriately
-for i, value in enumerate(values):
-    if i == 0:  # Larger bar
-        text_position = value - 1000  # Place text inside the bar towards the end
-        text_color = 'white'
-    else:  # Smaller bar
-        text_position = value + 1000  # Place text outside the bar
-        text_color = 'black'
-
-    ax.text(text_position, i, f'{int(value):,}', va='center', color=text_color, fontweight='bold')
 
 ax.set_xlabel('Number of Texts/Votes')
 ax.set_title('Conversion from Texts to Votes')
