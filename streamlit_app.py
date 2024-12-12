@@ -262,12 +262,6 @@ st.write(f"Total Muslim Votes: {muslim_voted}")
 #####################3  PRIVATE FUNCTIONS #################
 
 
-import streamlit as st
-import matplotlib.pyplot as plt
-
-# Page configuration for wider layout
-st.set_page_config(layout="wide")
-
 # Data for Text 1 campaign
 total_texts = 29125
 muslim_texted = 6405
