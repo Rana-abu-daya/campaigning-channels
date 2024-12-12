@@ -269,7 +269,7 @@ muslim_votes = 3304
 
 # Creating the funnel chart
 st.title("Text 1 Campaign ")
-fig, ax = plt.subplots(figsize=(8, 4))  # Adjust size to fit within the visual frame
+fig, ax = plt.subplots(figsize=(8, 3))  # Adjust size to fit within the visual frame
 
 # Values and labels
 stages = ['Total Texts Sent', 'Muslims Voted']
@@ -278,7 +278,7 @@ colors = ['skyblue', 'lightgreen']
 
 # Plotting a horizontal bar chart as a funnel with narrower bars
 for i, value in enumerate(values):
-    ax.barh(stages[i], value, color=colors[i], align='center', edgecolor='black', height=0.4)  # Reduced bar height for a narrower look
+    ax.barh(stages[i], value, color=colors[i], align='center', edgecolor='black', height=0.5)  # Reduced bar height for a narrower look
 
 # Inverting the plot to make it look like a funnel
 ax.invert_yaxis()
