@@ -242,7 +242,7 @@ with col1:
 with col2:
     muslim_voted = 247
     non_muslim_voted = completed - muslim_voted
-    labels = ['Muslim Voted', 'Non-Muslim Voted']
+    labels = [f'Muslim Voted: {muslim_voted}', f'Non-Muslim Voted: {non_muslim_voted}']
     sizes = [muslim_voted, non_muslim_voted]
 
     fig2, ax2 = plt.subplots()
