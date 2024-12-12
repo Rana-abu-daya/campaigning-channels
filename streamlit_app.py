@@ -187,3 +187,57 @@ st.write("Summary Information")
 st.write(f"Total Voters of Captains: 423")
 st.write(f"Voted: {votes_cast}")
 st.write(f"Not Voted: {votes_remaining}")
+
+
+###############
+
+
+# Hardcoded phone banking campaign results
+results = {
+    'busy': 194,
+    'completed': 880,
+    'declined': 46,
+    'failed': 1144,
+    'hungup': 26,
+    'machine_detection': 5381,
+    'no-answer': 573
+}
+
+# First Chart: Bar chart for phone banking campaign results
+st.title("Phone Banking Campaign Analysis")
+st.subheader("Detailed Campaign Results")
+fig, ax = plt.subplots()
+ax.bar(results.keys(), results.values(), color='skyblue')
+ax.set_ylabel('Number of Calls')
+ax.set_title('Results of Phone Banking Campaign')
+st.pyplot(fig)
+
+# Second Chart: Pie chart for completed vs other results
+completed = results['completed']
+other_results = sum(results.values()) - completed
+labels = ['Completed', 'Other Results']
+sizes = [completed, other_results]
+
+fig1, ax1 = plt.subplots()
+ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=['green', 'red'])
+ax1.axis('equal')
+st.subheader("Proportion of Completed Calls")
+st.pyplot(fig1)
+
+# Third Chart: Proportion of Muslims voted from completed
+muslim_voted = 247
+non_muslim_voted = completed - muslim_voted
+labels = ['Muslim Voted', 'Non-Muslim Voted']
+sizes = [muslim_voted, non_muslim_voted]
+
+fig2, ax2 = plt.subplots()
+ax2.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=['blue', 'orange'])
+ax2.axis('equal')
+st.subheader("Muslim Participation in Completed Calls")
+st.pyplot(fig2)
+
+# Summary information
+st.write("Summary Information")
+st.write(f"Total Calls: {sum(results.values())}")
+st.write(f"Total Completed Calls: {completed}")
+st.write(f"Total Muslim Votes: {muslim_voted}")
