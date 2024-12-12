@@ -208,7 +208,7 @@ results = {
 st.title("Phone Banking Campaign Analysis")
 # Bar chart for phone banking campaign results
 st.subheader("Detailed Campaign Results")
-fig, ax = plt.subplots(figsize=(8,5))  # Adjusted figure size to better fit the screen
+fig, ax = plt.subplots(figsize=(4,4))  # Adjusted figure size to better fit the screen
 #fig, ax = plt.subplots()
 bars = ax.bar(results.keys(), results.values(), color='skyblue')
 
