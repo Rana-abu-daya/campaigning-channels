@@ -262,33 +262,32 @@ st.write(f"Total Muslim Votes: {muslim_voted}")
 #####################3  PRIVATE FUNCTIONS #################
 
 
+
 # Data for the campaign
 total_texts = 29125
 muslim_votes = 3304
 
 # Creating the funnel chart
 st.title("Text 1 Campaign ")
-fig, ax = plt.subplots(figsize=(10, 4))  # Adjust size to better fit within the visual frame
+fig, ax = plt.subplots(figsize=(10, 4))  # Adjust size to fit within the visual frame
 
 # Values and labels
 stages = ['Total Texts Sent', 'Muslims Voted']
 values = [total_texts, muslim_votes]
 colors = ['skyblue', 'lightgreen']
 
-# Plotting a horizontal bar chart as a funnel
-bar_widths = [total_texts, muslim_votes]  # This makes it a true funnel chart
+# Plotting a horizontal bar chart as a funnel with narrower bars
 for i, value in enumerate(values):
-    ax.barh(stages[i], value, color=colors[i], align='center', edgecolor='black', height=0.5)  # Smaller height for a sleek look
+    ax.barh(stages[i], value, color=colors[i], align='center', edgecolor='black', height=0.4)  # Reduced bar height for a narrower look
 
 # Inverting the plot to make it look like a funnel
 ax.invert_yaxis()
 
-# Adding data labels inside or at the end of the bars depending on the value size
+# Adding data labels appropriately
 for i, value in enumerate(values):
-    if value < 1000:  # If the number is small, put it inside the bar
-        ax.text(value + 500, i, f'{int(value):,}', va='center', color='black', fontweight='bold')  # Offset to the right for visibility
-    else:  # Larger numbers fit inside the bar
-        ax.text(value - 5000, i, f'{int(value):,}', va='center', color='white', fontweight='bold')  # Inside the bar
+    # Adjust text placement to fit within the bar, accounting for smaller widths
+    text_position = value - (value * 0.05)  # Adjust this factor based on your preference and the value size
+    ax.text(text_position, i, f'{int(value):,}', va='center', color='white', fontweight='bold')
 
 ax.set_xlabel('Number of Texts/Votes')
 ax.set_title('Conversion from Texts to Votes')
