@@ -299,36 +299,62 @@ st.write(f"Total Muslim Votes: {muslim_votes:,}")
 ################################################################
 
 
+import streamlit as st
+import matplotlib.pyplot as plt
 
-# Data for the campaign
+# Page configuration for wider layout
+st.set_page_config(layout="wide")
+
+# Data for Text 2 campaign
 total_texts = 12090
+muslim_texted = 7177
 muslim_votes = 3488
 
+# Title and subtitle
+st.title("Text 2 Campaign Analysis")
+st.subheader("Effectiveness of Campaign Targeting Muslims")
+
 # Creating the funnel chart
-st.title("Text 2 Campaign")
-fig, ax = plt.subplots(figsize=(10, 4))  # Smaller figure size for focus
+fig, ax = plt.subplots(figsize=(10, 4))  # Adjust size to your preference
 
-# Values and labels
-stages = ['Total Texts Sent', 'Muslims Voted']
-values = [total_texts, muslim_votes]
-colors = ['red', 'lightgreen']
+# Values and labels for the funnel chart
+stages = ['Total Texts Sent', 'Muslims Texted', 'Muslims Voted']
+values = [total_texts, muslim_texted, muslim_votes]
+colors = ['skyblue', 'lightgreen', 'lightcoral']
 
-# Plotting a horizontal bar chart as a funnel
+# Plotting a horizontal bar chart as a funnel with adjusted heights
 for i, value in enumerate(values):
-    ax.barh(stages[i], value, color=colors[i], align='center', edgecolor='black')
+    ax.barh(stages[i], value, color=colors[i], align='center', edgecolor='black', height=0.5)
 
 # Inverting the plot to make it look like a funnel
 ax.invert_yaxis()
 
-# Adding data labels
+# Adding data labels appropriately
 for i, value in enumerate(values):
-    ax.text(value, i, f'  {int(value):,}', va='center', color='black', fontweight='bold')
+    # Position the label based on the value's size and the bar's length
+    text_position = value - (value * 0.03)  # 3% back from the end of the bar
+    ax.text(text_position, i, f'{int(value):,}', va='center', color='white', fontweight='bold')
 
 ax.set_xlabel('Number of Texts/Votes')
 ax.set_title('Conversion from Texts to Votes')
 st.pyplot(fig)
 
+# Pie Chart Display for percentages
+col1, col2 = st.columns(2)
+
+# Second Pie Chart: Percentage of Muslims who voted from those texted
+with col2:
+    st.subheader("Percentage of Muslims Voted from Texted")
+    labels = ['Muslims Voted', 'Muslims Not Voted']
+    sizes = [muslim_votes, muslim_texted - muslim_votes]
+    colors = ['lightcoral', 'lightgrey']
+    fig2, ax2 = plt.subplots()
+    ax2.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=colors)
+    ax2.axis('equal')
+    st.pyplot(fig2)
+
 # Summary information
 st.write("Summary Information")
 st.write(f"Total Texts Sent: {total_texts:,}")
-st.write(f"Total Muslim Votes: {muslim_votes:,}")
+st.write(f"Total Muslims Texted: {muslim_texted:,}")
+st.write(f"Total Muslims Voted: {muslim_votes:,}")
