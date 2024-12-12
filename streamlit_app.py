@@ -121,7 +121,8 @@
 # st.write(f"Not voted: {votes_remaining}")
 import streamlit as st
 import matplotlib.pyplot as plt
-
+# Configuring page layout to wide mode for better chart visibility
+st.set_page_config(layout="wide")
 # Hardcoded Ethnicity Counts
 ethnicity_counts = {
     'Bangladesh': 160,
