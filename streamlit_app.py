@@ -342,6 +342,17 @@ st.pyplot(fig)
 # Pie Chart Display for percentages
 col1, col2 = st.columns(2)
 
+# First Pie Chart: Percentage of Muslims texted
+with col1:
+    st.subheader("Percentage of Muslims Texted")
+    labels = ['Muslims Texted', 'Others']
+    sizes = [muslim_texted, total_texts - muslim_texted]
+    colors = ['lightgreen', 'grey']
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=colors)
+    ax1.axis('equal')
+    st.pyplot(fig1)
+
 # Second Pie Chart: Percentage of Muslims who voted from those texted
 with col2:
     st.subheader("Percentage of Muslims Voted from Texted")
