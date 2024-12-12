@@ -261,14 +261,14 @@ st.write(f"Total Muslim Votes: {muslim_voted}")
 
 #####################3  PRIVATE FUNCTIONS #################
 
-# Data for the text campaign
+
+# Data for the campaign
 total_texts = 29125
 muslim_votes = 3304
 
-# Creating the bar chart for the text campaign results
-st.title("Text 1 Campaign Results")
-st.subheader("Overview of Text Campaign Effectiveness")
-fig, ax = plt.subplots(figsize=(6, 3))  # Smaller figure size for focus
+# Creating the funnel chart
+st.title("Text 1 Campaign ")
+fig, ax = plt.subplots(figsize=(10, 4))  # Adjust size to better fit within the visual frame
 
 # Values and labels
 stages = ['Total Texts Sent', 'Muslims Voted']
@@ -276,15 +276,19 @@ values = [total_texts, muslim_votes]
 colors = ['skyblue', 'lightgreen']
 
 # Plotting a horizontal bar chart as a funnel
+bar_widths = [total_texts, muslim_votes]  # This makes it a true funnel chart
 for i, value in enumerate(values):
-    ax.barh(stages[i], value, color=colors[i], align='center', edgecolor='black')
+    ax.barh(stages[i], value, color=colors[i], align='center', edgecolor='black', height=0.5)  # Smaller height for a sleek look
 
 # Inverting the plot to make it look like a funnel
 ax.invert_yaxis()
 
-# Adding data labels
+# Adding data labels inside or at the end of the bars depending on the value size
 for i, value in enumerate(values):
-    ax.text(value, i, f'  {int(value):,}', va='center', color='black', fontweight='bold')
+    if value < 1000:  # If the number is small, put it inside the bar
+        ax.text(value + 500, i, f'{int(value):,}', va='center', color='black', fontweight='bold')  # Offset to the right for visibility
+    else:  # Larger numbers fit inside the bar
+        ax.text(value - 5000, i, f'{int(value):,}', va='center', color='white', fontweight='bold')  # Inside the bar
 
 ax.set_xlabel('Number of Texts/Votes')
 ax.set_title('Conversion from Texts to Votes')
@@ -294,7 +298,6 @@ st.pyplot(fig)
 st.write("Summary Information")
 st.write(f"Total Texts Sent: {total_texts:,}")
 st.write(f"Total Muslim Votes: {muslim_votes:,}")
-
 
 
 ################################################################
