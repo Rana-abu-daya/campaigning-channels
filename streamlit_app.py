@@ -222,29 +222,34 @@ ax.set_ylabel('Number of Calls')
 ax.set_title('Results of Phone Banking Campaign')
 st.pyplot(fig)
 
-# Second Chart: Pie chart for completed vs other results
-completed = results['completed']
-other_results = sum(results.values()) - completed
-labels = [f"Completed: {results['completed']}", f"Other Results: {sum(results.values()) - results['completed']}"]
-sizes = [completed, other_results]
+# Setting up columns for the second and third charts
+col1, col2 = st.columns(2)
 
-fig1, ax1 = plt.subplots()
-ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=['light blue', 'light green'])
-ax1.axis('equal')
-st.subheader("Proportion of Completed Calls")
-st.pyplot(fig1)
+# Second Chart: Pie chart for completed vs other results
+with col1:
+    completed = results['completed']
+    other_results = sum(results.values()) - completed
+    labels = [f"Completed: {results['completed']}", f"Other Results: {sum(results.values()) - results['completed']}"]
+    sizes = [completed, other_results]
+
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=['lightblue', 'lightgreen'])
+    ax1.axis('equal')
+    st.subheader("Proportion of Completed Calls")
+    st.pyplot(fig1)
 
 # Third Chart: Proportion of Muslims voted from completed
-muslim_voted = 247
-non_muslim_voted = completed - muslim_voted
-labels = ['Muslim Voted', 'Non-Muslim Voted']
-sizes = [muslim_voted, non_muslim_voted]
+with col2:
+    muslim_voted = 247
+    non_muslim_voted = completed - muslim_voted
+    labels = ['Muslim Voted', 'Non-Muslim Voted']
+    sizes = [muslim_voted, non_muslim_voted]
 
-fig2, ax2 = plt.subplots()
-ax2.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=['blue', 'orange'])
-ax2.axis('equal')
-st.subheader("Muslim Participation in Completed Calls")
-st.pyplot(fig2)
+    fig2, ax2 = plt.subplots()
+    ax2.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=90, colors=['turquoise', 'peachpuff'])  # Changed colors for aesthetic compatibility
+    ax2.axis('equal')
+    st.subheader("Muslim Participation in Completed Calls")
+    st.pyplot(fig2)
 
 # Summary information
 st.write("Summary Information")
