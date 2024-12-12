@@ -312,7 +312,7 @@ fig, ax = plt.subplots(figsize=(6, 4))  # Smaller figure size for focus
 # Values and labels
 stages = ['Total Texts Sent', 'Muslims Voted']
 values = [total_texts, muslim_votes]
-colors = ['lightred', 'lightgreen']
+colors = ['red', 'lightgreen']
 
 # Plotting a horizontal bar chart as a funnel
 for i, value in enumerate(values):
