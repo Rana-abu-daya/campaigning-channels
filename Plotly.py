@@ -161,13 +161,24 @@ results = {
     'no-answer': 573
 }
 
+# Calculate the total number of calls
+total_calls = sum(results.values())
+
+# Add 'Total' to the results dictionary at the beginning
+results = {'total': total_calls, **results}
+
+# Order results from largest to smallest, excluding 'total' which stays at the top
+sorted_keys = sorted(results.keys(), key=lambda x: results[x], reverse=True)
+sorted_keys.remove('total')  # Remove total to add it back to the front manually
+sorted_keys.insert(0, 'total')  # Ensure total is the first entry
+
 # Create a funnel chart for the phone banking results
 fig = go.Figure()
 
 fig.add_trace(go.Funnel(
     name = 'Results',
-    y = list(results.keys()),
-    x = list(results.values()),
+    y = sorted_keys,
+    x = [results[key] for key in sorted_keys],
     textinfo = "value+percent previous"
 ))
 
