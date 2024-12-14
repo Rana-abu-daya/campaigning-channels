@@ -150,6 +150,7 @@ st.subheader("Summary Information")
 st.write("This analysis covers the flow of voters from registration to actual voting, segmented by captain leadership and ethnic groups within the voter population.")
 ####################  phone bakning
 
+
 # Results data
 results = {
     'busy': 194,
@@ -176,15 +177,28 @@ sorted_keys.insert(0, 'total')  # Ensure total is the first entry
 fig = go.Figure()
 
 fig.add_trace(go.Funnel(
-    name = 'Results',
-    y = sorted_keys,
-    x = [results[key] for key in sorted_keys],
-    textinfo = "value+percent previous"
+    name='Results',
+    y=sorted_keys,
+    x=[results[key] for key in sorted_keys],
+    text=[f"{key}: {results[key]}" for key in sorted_keys],  # Custom text to show absolute values
+    textinfo="text+percent total"  # Showing percentages based on the total number of calls
 ))
 
+fig.update_layout(
+    title="Phone Banking Campaign Analysis",
+    funnelmode="stack",  # Ensures all segments are visualized in a straightforward stacked manner
+    annotations=[dict(
+        x=0.5,
+        y=-0.15,
+        showarrow=False,
+        text=f"Total Calls: {total_calls}",
+        xref="paper",
+        yref="paper"
+    )]
+)
+
 # Streamlit setup for displaying the funnel chart
-st.title("Phone Banking Campaign Analysis")
-st.subheader("Detailed Campaign Results")
+st.title("Detailed Campaign Results")
 st.plotly_chart(fig, use_container_width=True)
 
 
