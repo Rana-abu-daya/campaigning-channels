@@ -240,7 +240,58 @@ st.plotly_chart(fig, use_container_width=True)
 completed = 880
 # Summary information
 st.write("Summary Information")
-st.write(f"Total Calls: {sum(results.values())}")
+st.write(f"Total Calls: 8244")
 st.write(f"Total Completed Calls: {completed}")
 st.write(f"Total Muslim Votes: {muslim_voted}")
 ##############  End PHone banking
+
+
+
+################### text 1
+
+
+# Data for Text 1 campaign
+total_texts = 29125
+muslim_texted = 6405
+muslim_votes = 3304
+
+# Streamlit App Setup
+st.title("Text 1 Campaign Analysis")
+st.subheader("Effectiveness of Campaign Targeting Muslims")
+
+# Creating the funnel chart with percentages relative to the total texts sent
+fig = go.Figure(go.Funnel(
+    y=["Total Texts Sent", "Muslims Texted", "Muslims Voted"],
+    x=[total_texts, muslim_texted, muslim_votes],
+    textposition="inside",
+    text=[f"Total Texts Sent: {total_texts} (100%)",
+          f"Muslims Texted: {muslim_texted} ({muslim_texted/total_texts*100:.2f}%)",
+          f"Muslims Voted: {muslim_votes} ({muslim_votes/total_texts*100:.2f}%)"],
+    hoverinfo="text+value"  # Adds hover effect to display both text and value
+))
+
+fig.update_layout(title="Conversion from Texts to Votes")
+st.plotly_chart(fig, use_container_width=True)
+
+
+# Data setup for sunburst chart
+labels = ["Texts Sent", "Muslims Texted", "Muslims Voted", "Muslims Not Voted"]
+parents = ["", "Texts Sent", "Muslims Texted", "Muslims Texted"]
+values = [total_texts, muslim_texted, muslim_votes, muslim_texted - muslim_votes]
+
+# Create sunburst chart
+fig2 = go.Figure(go.Sunburst(
+    labels=labels,
+    parents=parents,
+    values=values,
+    branchvalues="total",
+    marker=dict(colors=["skyblue", "lightgreen", "lightcoral", "lightgrey"])
+))
+fig2.update_layout(title="Detailed Breakdown of Muslim Texting and Voting")
+
+st.plotly_chart(fig2, use_container_width=True)
+# Summary information
+st.write("Summary Information")
+st.write(f"Total Texts Sent: {total_texts:,}")
+st.write(f"Total Muslims Texted: {muslim_texted:,}")
+st.write(f"Total Muslims Voted: {muslim_votes:,}")
