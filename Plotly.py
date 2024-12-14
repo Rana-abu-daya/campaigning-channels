@@ -1,7 +1,5 @@
 import plotly.graph_objects as go
 import streamlit as st
-import pandas as pd
-
 st.set_page_config(layout="wide")
 st.title("Campaigns Voting Analysis")
 st.header("Captain Voting Funnel Chart")
@@ -100,6 +98,11 @@ fig.update_layout(
 st.plotly_chart(fig, use_container_width=True)
 
 
+
+import plotly.graph_objects as go
+import pandas as pd
+import streamlit as st
+
 # Sample data in the form of a dictionary which should ideally come from a DataFrame for easier manipulation
 data = {
     'Captain': ['Ali H Ali', 'Bilal Riyad', 'Bilal Riyad', 'Bilal Riyad', 'Hasan Syed', 'Hasan Syed', 'Hasan Syed', 'Husain Mohammed', 'Mohamed Ahmed', 'Mohamed Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Samir Sarhan'],
@@ -143,6 +146,33 @@ fig.update_layout(
 # Display this plot in Streamlit
 st.title("Detailed Voting Analysis by Captain and Ethnicity")
 st.plotly_chart(fig, use_container_width=True)
+
+import pandas as pd
+import plotly.express as px
+import streamlit as st
+
+# Sample data setup
+data = {
+    'Captain': ['Ali H Ali', 'Bilal Riyad', 'Bilal Riyad', 'Bilal Riyad', 'Hasan Syed', 'Hasan Syed', 'Hasan Syed', 'Husain Mohammed', 'Mohamed Ahmed', 'Mohamed Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Samir Sarhan'],
+    'Ethnicity': ['Somalia', 'Egypt', 'Jordan', 'Palestine', 'Ethiopia', 'India', 'Pakistan', 'Bangladesh', 'Bangladesh', 'Egypt', 'Brunei', 'Pakistan', 'Palestine', 'Saint Vincent and the Grenadines', 'Somalia', 'Palestine'],
+    'Voted': [0, 2, 1, 24, 1, 11, 85, 160, 0, 13, 1, 2, 5, 0, 1, 9]
+}
+
+df = pd.DataFrame(data)
+
+# Streamlit app setup
+st.title("Treemap Visualization of Captain Voting Statistics by Ethnicity")
+
+# Generate a treemap for each captain
+for captain in df['Captain'].unique():
+    fig = px.treemap(
+        df[df['Captain'] == captain],
+        path=['Captain', 'Ethnicity'],  # Hierarchical levels: captain and ethnicity
+        values='Voted',
+        title=f"Voting Distribution for {captain}"
+    )
+    st.plotly_chart(fig, use_container_width=True)
+
 
 # Summary Information
 st.subheader("Summary Information")
