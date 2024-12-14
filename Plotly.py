@@ -281,20 +281,35 @@ st.plotly_chart(fig, use_container_width=True)
 
 
 
-# Data setup for sunburst chart
-labels = ["Texts Sent", "Muslims Texted", "Muslims Voted", "Muslims Not Voted"]
-parents = ["", "Texts Sent", "Muslims Texted", "Muslims Texted"]
-values = [total_texts, muslim_texted, muslim_votes, muslim_texted - muslim_votes]
+# Subheader and column setup
+st.subheader("Conversion Rates for Text Campaign")
+col1, col2 = st.columns(2)
 
-# Create sunburst chart
-fig2 = go.Figure(go.Sunburst(
-    labels=labels,
-    parents=parents,
-    values=values,
-    branchvalues="total",
-    marker=dict(colors=["skyblue", "lightgreen", "lightcoral", "lightgrey"])
-))
-fig2.update_layout(title="Detailed Breakdown of Muslim Texting and Voting")
+# First Pie Chart: Percentage of Muslims texted
+with col1:
+    st.subheader("Percentage of Muslims Texted")
+    labels = ['Muslims Texted', 'Others Texted']
+    values = [muslim_texted, total_texts - muslim_texted]
+    colors = ['lightgreen', 'grey']
+
+    fig1 = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.4)])
+    fig1.update_traces(marker=dict(colors=colors), textinfo='label+percent')
+    fig1.update_layout(title_text="Muslims Texted vs Total Texts")
+
+    st.plotly_chart(fig1, use_container_width=True)
+
+# Second Pie Chart: Percentage of Muslims who voted from those texted
+with col2:
+    st.subheader("Percentage of Muslims Voted from Texted")
+    labels = ['Muslims Voted', 'Muslims Not Voted']
+    values = [muslim_votes, muslim_texted - muslim_votes]
+    colors = ['lightcoral', 'lightgrey']
+
+    fig2 = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.4)])
+    fig2.update_traces(marker=dict(colors=colors), textinfo='label+percent')
+    fig2.update_layout(title_text="Muslim Voting Rate Among Texted")
+
+    st.plotly_chart(fig2, use_container_width=True)
 
 st.plotly_chart(fig2, use_container_width=True)
 # Summary information
