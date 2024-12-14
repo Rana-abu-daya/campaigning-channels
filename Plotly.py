@@ -237,7 +237,7 @@ fig.update_layout(
 # Display in Streamlit
 st.title("Detailed Analysis of Completed Calls")
 st.plotly_chart(fig, use_container_width=True)
-
+completed = 880
 # Summary information
 st.write("Summary Information")
 st.write(f"Total Calls: {sum(results.values())}")
