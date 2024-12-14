@@ -165,14 +165,20 @@ results = {
 }
 
 # Fixed total number of calls as specified
-total_calls = 8244
+fixed_total_calls = 8244
+
+# Add 'Total' to results with the fixed total number
+results['total'] = fixed_total_calls
+
+# Sort results from largest to smallest, including the total
+sorted_results = dict(sorted(results.items(), key=lambda item: item[1], reverse=True))
 
 # Create a funnel chart for the phone banking results
 fig = go.Figure()
 
-# We need to calculate percentages manually based on the fixed total
-for key, value in results.items():
-    percentage = (value / total_calls * 100)  # Calculate percentage of the fixed total
+# We will calculate percentages manually based on the fixed total
+for key, value in sorted_results.items():
+    percentage = (value / fixed_total_calls * 100)  # Calculate percentage of the fixed total
     label = f"{key} ({value} - {percentage:.2f}%)"
     fig.add_trace(go.Funnel(
         name=key,
@@ -190,7 +196,7 @@ fig.update_layout(
         x=0.5,
         y=-0.15,
         showarrow=False,
-        text=f"Total Calls: {total_calls}",
+        text=f"Total Calls: {fixed_total_calls}",
         xref="paper",
         yref="paper"
     )]
@@ -199,7 +205,6 @@ fig.update_layout(
 # Streamlit setup for displaying the funnel chart
 st.title("Detailed Campaign Results")
 st.plotly_chart(fig, use_container_width=True)
-
 
 
 completed = results['completed']
