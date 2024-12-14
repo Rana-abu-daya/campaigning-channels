@@ -179,7 +179,7 @@ fig = go.Figure()
 # We will calculate percentages manually based on the fixed total
 for key, value in sorted_results.items():
     percentage = (value / fixed_total_calls * 100)  # Calculate percentage of the fixed total
-    label = f"{key} ({value} - {percentage:.2f}%)"
+    label = f"{key} ({percentage:.2f}%)"
     fig.add_trace(go.Funnel(
         name=key,
         y=[key],
