@@ -100,6 +100,7 @@ fig.update_layout(
 )
 st.plotly_chart(fig, use_container_width=True)
 
+############ Rana
 
 # Sample data setup
 data = {
@@ -116,35 +117,40 @@ df['Total Votes by Captain'] = df.groupby('Captain')['Voted'].transform('sum')
 # Calculate percentage of total votes for each ethnicity per captain
 df['Percentage'] = (df['Voted'] / df['Total Votes by Captain'] * 100).round(2).astype(str) + '%'
 
-# Handle zeros by setting a minimal visual length for aesthetic reasons (e.g., 1)
-df['Visual Length'] = df['Voted'].apply(lambda x: 1 if x > 0 else 0)
+# Use a minimal visual length for all bars, including zeros, for aesthetic reasons
+df['Visual Length'] = df['Voted'].apply(lambda x: 0.1 if x == 0 else x)
 
 # Streamlit App Setup
 st.title('Uniform Bar Lengths with Voting Percentages by Captain and Ethnicity')
 
 # Generating the Bar Chart
 fig = px.bar(
-    df[df['Voted'] > 0],  # Filter out entries where Voted is zero for visual aesthetics
+    df,  # Include all entries
     x="Captain",
-    y="Visual Length",  # Use the normalized length for display
+    y="Visual Length",  # Use the visual length for display
     color="Ethnicity",
     text="Percentage",  # Display computed percentages on the bars
-    title="Votes by Captain and Ethnicity (Uniform Bar Lengths)"
+    title="Votes by Captain and Ethnicity (Including Zero Votes)"
 )
 
 # Update layout for text inside bars and hover info for actual votes
 fig.update_traces(
     textposition='inside',
     hoverinfo="text",
-    hovertext=df['Voted']
+    hovertext=df.apply(lambda row: f"{row['Ethnicity']}: {row['Voted']} votes", axis=1)
 )
 
-# Update y-axis to not show misleading values since bars are uniform
-fig.update_yaxes(showticklabels=False, title='')
+# Update y-axis to show customized ticks
+fig.update_yaxes(
+    showticklabels=True,
+    title='Number of Votes',
+    tickvals=[0.1, 10, 50, 100, 150, 200],
+    ticktext=['0', '10', '50', '100', '150', '200']
+)
 
 # Display the plot in Streamlit
 st.plotly_chart(fig, use_container_width=True)
 
-# Summary Information
+#  Summary Information
 st.subheader("Summary Information")
 st.write("This analysis covers the flow of voters from registration to actual voting, segmented by captain leadership and ethnic groups within the voter population.")
