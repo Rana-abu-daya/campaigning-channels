@@ -206,33 +206,37 @@ fig.update_layout(
 st.title("Detailed Campaign Results")
 st.plotly_chart(fig, use_container_width=True)
 
+import plotly.graph_objects as go
+import streamlit as st
 
-completed = results['completed']
+# Completed calls and breakdown
+completed_calls = 880
 muslim_voted = 247
-non_muslim_voted = completed - muslim_voted
+non_muslim_voted = completed_calls - muslim_voted  # Calculate non-Muslim votes
 
-# Combined funnel chart for completed calls and voter participation
-fig2 = go.Figure()
+# Create the funnel chart
+fig = go.Figure()
 
-# First segment: Completed calls
-fig2.add_trace(go.Funnel(
-    name = 'Total Completed',
-    y = ["Completed Calls"],
-    x = [completed],
-    textinfo = "value+percent total"
+# Adding data to the funnel chart
+fig.add_trace(go.Funnel(
+    name='Completed Calls Breakdown',
+    y=['Completed Calls', 'Muslim Voted', 'Non-Muslim Voted'],
+    x=[completed_calls, muslim_voted, non_muslim_voted],
+    textposition="inside",
+    text=[f"Completed Calls: {completed_calls}",
+          f"Muslim Voted: {muslim_voted} ({muslim_voted/completed_calls*100:.2f}%)",
+          f"Non-Muslim Voted: {non_muslim_voted} ({non_muslim_voted/completed_calls*100:.2f}%)"]
 ))
 
-# Second segment: Voter participation
-fig2.add_trace(go.Funnel(
-    name = 'Voter Participation',
-    y = ["Muslim Voted", "Non-Muslim Voted"],
-    x = [muslim_voted, non_muslim_voted],
-    textinfo = "value+percent previous"
-))
+# Update layout
+fig.update_layout(
+    title="Breakdown of Completed Calls",
+    funnelmode="stack"
+)
 
-# Display combined funnel chart in Streamlit
-st.subheader("Breakdown of Completed Calls")
-st.plotly_chart(fig2, use_container_width=True)
+# Display in Streamlit
+st.title("Detailed Analysis of Completed Calls")
+st.plotly_chart(fig, use_container_width=True)
 
 # Summary information
 st.write("Summary Information")
