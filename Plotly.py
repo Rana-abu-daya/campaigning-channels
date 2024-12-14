@@ -148,3 +148,65 @@ st.plotly_chart(fig, use_container_width=True)
 # Summary Information
 st.subheader("Summary Information")
 st.write("This analysis covers the flow of voters from registration to actual voting, segmented by captain leadership and ethnic groups within the voter population.")
+####################  phone bakning
+
+# Results data
+results = {
+    'busy': 194,
+    'completed': 880,
+    'declined': 46,
+    'failed': 1144,
+    'hungup': 26,
+    'machine_detection': 5381,
+    'no-answer': 573
+}
+
+# Create a funnel chart for the phone banking results
+fig = go.Figure()
+
+fig.add_trace(go.Funnel(
+    name = 'Results',
+    y = list(results.keys()),
+    x = list(results.values()),
+    textinfo = "value+percent previous"
+))
+
+# Streamlit setup for displaying the funnel chart
+st.title("Phone Banking Campaign Analysis")
+st.subheader("Detailed Campaign Results")
+st.plotly_chart(fig, use_container_width=True)
+
+
+completed = results['completed']
+muslim_voted = 247
+non_muslim_voted = completed - muslim_voted
+
+# Combined funnel chart for completed calls and voter participation
+fig2 = go.Figure()
+
+# First segment: Completed calls
+fig2.add_trace(go.Funnel(
+    name = 'Total Completed',
+    y = ["Completed Calls"],
+    x = [completed],
+    textinfo = "value+percent total"
+))
+
+# Second segment: Voter participation
+fig2.add_trace(go.Funnel(
+    name = 'Voter Participation',
+    y = ["Muslim Voted", "Non-Muslim Voted"],
+    x = [muslim_voted, non_muslim_voted],
+    textinfo = "value+percent previous"
+))
+
+# Display combined funnel chart in Streamlit
+st.subheader("Breakdown of Completed Calls")
+st.plotly_chart(fig2, use_container_width=True)
+
+# Summary information
+st.write("Summary Information")
+st.write(f"Total Calls: {sum(results.values())}")
+st.write(f"Total Completed Calls: {completed}")
+st.write(f"Total Muslim Votes: {muslim_voted}")
+##############  End PHone banking
