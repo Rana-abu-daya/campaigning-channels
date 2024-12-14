@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
 import streamlit as st
+import pandas as pd
 st.set_page_config(layout="wide")
 st.title("Campaigns Voting Analysis")
 st.header("Captain Voting Funnel Chart")
@@ -82,7 +83,7 @@ all_statuses = [1, 34, 113, 230, 21, 11, 12]
 
 # Create the figure
 fig = go.Figure(data=[
-go.Bar(name='All Voters', x=captains, y=all_statuses, marker_color='lightblue'),
+go.Bar(name='Approached Voters', x=captains, y=all_statuses, marker_color='lightblue'),
     go.Bar(name='Voted Voters', x=captains, y=voted, marker_color='blue')
 
 ])
@@ -173,7 +174,27 @@ for captain in df['Captain'].unique():
     )
     st.plotly_chart(fig, use_container_width=True)
 
+# Sample data setup
+data = {
+    'Captain': ['Ali H Ali', 'Bilal Riyad', 'Bilal Riyad', 'Bilal Riyad', 'Hasan Syed', 'Hasan Syed', 'Hasan Syed', 'Husain Mohammed', 'Mohamed Ahmed', 'Mohamed Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Samir Sarhan'],
+    'Ethnicity': ['Somalia', 'Egypt', 'Jordan', 'Palestine', 'Ethiopia', 'India', 'Pakistan', 'Bangladesh', 'Bangladesh', 'Egypt', 'Brunei', 'Pakistan', 'Palestine', 'Saint Vincent and the Grenadines', 'Somalia', 'Palestine'],
+    'Voted': [0, 2, 1, 24, 1, 11, 85, 160, 0, 13, 1, 2, 5, 0, 1, 9]
+}
 
+df = pd.DataFrame(data)
+
+# Streamlit app setup
+st.title("Sunburst Visualization of Captain Voting Statistics by Ethnicity")
+
+# Generate a sunburst chart for each captain
+for captain in df['Captain'].unique():
+    fig = px.sunburst(
+        df[df['Captain'] == captain],
+        path=['Captain', 'Ethnicity'],  # Hierarchical levels: captain and ethnicity
+        values='Voted',
+        title=f"Voting Distribution for {captain}"
+    )
+    st.plotly_chart(fig, use_container_width=True)
 # Summary Information
 st.subheader("Summary Information")
 st.write("This analysis covers the flow of voters from registration to actual voting, segmented by captain leadership and ethnic groups within the voter population.")
