@@ -150,6 +150,8 @@ st.subheader("Summary Information")
 st.write("This analysis covers the flow of voters from registration to actual voting, segmented by captain leadership and ethnic groups within the voter population.")
 ####################  phone bakning
 
+import plotly.graph_objects as go
+import streamlit as st
 
 # Results data
 results = {
@@ -162,31 +164,28 @@ results = {
     'no-answer': 573
 }
 
-# Calculate the total number of calls
-total_calls = sum(results.values())
-
-# Add 'Total' to the results dictionary at the beginning
-results = {'total': total_calls, **results}
-
-# Order results from largest to smallest, excluding 'total' which stays at the top
-sorted_keys = sorted(results.keys(), key=lambda x: results[x], reverse=True)
-sorted_keys.remove('total')  # Remove total to add it back to the front manually
-sorted_keys.insert(0, 'total')  # Ensure total is the first entry
+# Fixed total number of calls as specified
+total_calls = 8244
 
 # Create a funnel chart for the phone banking results
 fig = go.Figure()
 
-fig.add_trace(go.Funnel(
-    name='Results',
-    y=sorted_keys,
-    x=[results[key] for key in sorted_keys],
-    text=[f"{key}: {results[key]}" for key in sorted_keys],  # Custom text to show absolute values
-    textinfo="text+percent total"  # Showing percentages based on the total number of calls
-))
+# We need to calculate percentages manually based on the fixed total
+for key, value in results.items():
+    percentage = (value / total_calls * 100)  # Calculate percentage of the fixed total
+    label = f"{key} ({value} - {percentage:.2f}%)"
+    fig.add_trace(go.Funnel(
+        name=key,
+        y=[key],
+        x=[value],
+        text=[label],
+        textposition="inside"
+    ))
 
+# Update layout to improve appearance
 fig.update_layout(
     title="Phone Banking Campaign Analysis",
-    funnelmode="stack",  # Ensures all segments are visualized in a straightforward stacked manner
+    funnelmode="stack",  # Stacked mode to show all segments at the same scale
     annotations=[dict(
         x=0.5,
         y=-0.15,
@@ -200,6 +199,7 @@ fig.update_layout(
 # Streamlit setup for displaying the funnel chart
 st.title("Detailed Campaign Results")
 st.plotly_chart(fig, use_container_width=True)
+
 
 
 completed = results['completed']
