@@ -77,3 +77,27 @@ st.plotly_chart(fig_ethnicities, use_container_width=True, key='ethnicities_char
 # Summary Information
 st.subheader("Summary Information")
 st.write("This analysis covers the flow of voters from registration to actual voting, segmented by captain leadership and ethnic groups within the voter population.")
+
+# Sample data
+captains = ["Ali H Ali", "Bilal Riyad", "Hasan Syed", "Husain Mohammed", "Mohamed Ahmed", "Nazeer Ahmed", "Samir Sarhan"]
+voted = [0, 27, 97, 160, 13, 9, 9]
+all_statuses = [1, 34, 113, 230, 21, 11, 12]
+
+# Create the figure
+fig = go.Figure(data=[
+    go.Bar(name='Voted', x=captains, y=voted, marker_color='blue'),
+    go.Bar(name='All Statuses', x=captains, y=all_statuses, marker_color='lightblue')
+])
+
+# Change the bar mode
+fig.update_layout(
+    barmode='group',
+    title="Captain Voting and Status Overview",
+    xaxis_title="Captains",
+    yaxis_title="Counts",
+    legend_title="Categories"
+)
+
+# Streamlit integration
+st.title('Captain Voting Statistics')
+st.plotly_chart(fig, use_container_width=True)
