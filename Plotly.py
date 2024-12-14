@@ -282,7 +282,6 @@ st.plotly_chart(fig, use_container_width=True)
 
 
 # Subheader and column setup
-st.subheader("Conversion Rates for Text Campaign")
 col1, col2 = st.columns(2)
 
 # First Pie Chart: Percentage of Muslims texted
@@ -311,7 +310,6 @@ with col2:
 
     st.plotly_chart(fig2, use_container_width=True)
 
-st.plotly_chart(fig2, use_container_width=True)
 # Summary information
 st.write("Summary Information")
 st.write(f"Total Texts Sent: {total_texts:,}")
