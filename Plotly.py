@@ -1,5 +1,6 @@
 import plotly.graph_objects as go
 import streamlit as st
+st.set_page_config(layout="wide")
 
 # Captains and their votes
 captain_votes = {
