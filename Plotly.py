@@ -101,10 +101,6 @@ fig.update_layout(
 st.plotly_chart(fig, use_container_width=True)
 
 
-
-
-
-
 # Sample data setup
 data = {
     'Captain': ['Ali H Ali', 'Bilal Riyad', 'Bilal Riyad', 'Bilal Riyad', 'Hasan Syed', 'Hasan Syed', 'Hasan Syed', 'Husain Mohammed', 'Mohamed Ahmed', 'Mohamed Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Samir Sarhan'],
@@ -120,26 +116,34 @@ df['Total Votes by Captain'] = df.groupby('Captain')['Voted'].transform('sum')
 # Calculate percentage of total votes for each ethnicity per captain
 df['Percentage'] = (df['Voted'] / df['Total Votes by Captain'] * 100).round(2).astype(str) + '%'
 
+# Handle zeros by setting a minimal visual length for aesthetic reasons (e.g., 1)
+df['Visual Length'] = df['Voted'].apply(lambda x: 1 if x > 0 else 0)
+
 # Streamlit App Setup
-st.title('Detailed Voting Analysis by Captain and Ethnicity with Percentages')
+st.title('Uniform Bar Lengths with Voting Percentages by Captain and Ethnicity')
 
 # Generating the Bar Chart
 fig = px.bar(
-    df,
+    df[df['Voted'] > 0],  # Filter out entries where Voted is zero for visual aesthetics
     x="Captain",
-    y="Voted",
+    y="Visual Length",  # Use the normalized length for display
     color="Ethnicity",
     text="Percentage",  # Display computed percentages on the bars
-    title="Votes by Captain and Ethnicity"
+    title="Votes by Captain and Ethnicity (Uniform Bar Lengths)"
 )
 
-# Update layout for text inside bars
-fig.update_traces(textposition='inside')
+# Update layout for text inside bars and hover info for actual votes
+fig.update_traces(
+    textposition='inside',
+    hoverinfo="text",
+    hovertext=df['Voted']
+)
+
+# Update y-axis to not show misleading values since bars are uniform
+fig.update_yaxes(showticklabels=False, title='')
 
 # Display the plot in Streamlit
 st.plotly_chart(fig, use_container_width=True)
-
-
 
 # Summary Information
 st.subheader("Summary Information")
