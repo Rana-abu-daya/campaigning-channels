@@ -104,7 +104,8 @@ st.plotly_chart(fig, use_container_width=True)
 
 
 
-# Data Setup
+
+# Sample data setup
 data = {
     'Captain': ['Ali H Ali', 'Bilal Riyad', 'Bilal Riyad', 'Bilal Riyad', 'Hasan Syed', 'Hasan Syed', 'Hasan Syed', 'Husain Mohammed', 'Mohamed Ahmed', 'Mohamed Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Samir Sarhan'],
     'Ethnicity': ['Somalia', 'Egypt', 'Jordan', 'Palestine', 'Ethiopia', 'India', 'Pakistan', 'Bangladesh', 'Bangladesh', 'Egypt', 'Brunei', 'Pakistan', 'Palestine', 'Saint Vincent and the Grenadines', 'Somalia', 'Palestine'],
@@ -113,8 +114,14 @@ data = {
 
 df = pd.DataFrame(data)
 
+# Calculate total votes per captain for percentage calculations
+df['Total Votes by Captain'] = df.groupby('Captain')['Voted'].transform('sum')
+
+# Calculate percentage of total votes for each ethnicity per captain
+df['Percentage'] = (df['Voted'] / df['Total Votes by Captain'] * 100).round(2).astype(str) + '%'
+
 # Streamlit App Setup
-st.title('Voting Details with Ethnicity Labels')
+st.title('Detailed Voting Analysis by Captain and Ethnicity with Percentages')
 
 # Generating the Bar Chart
 fig = px.bar(
@@ -122,14 +129,14 @@ fig = px.bar(
     x="Captain",
     y="Voted",
     color="Ethnicity",
-    text="Ethnicity",  # Display the ethnicity names on the bars
+    text="Percentage",  # Display computed percentages on the bars
     title="Votes by Captain and Ethnicity"
 )
 
-# Customizing the text display
+# Update layout for text inside bars
 fig.update_traces(textposition='inside')
 
-# Streamlit Display
+# Display the plot in Streamlit
 st.plotly_chart(fig, use_container_width=True)
 
 
