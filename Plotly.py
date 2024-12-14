@@ -1,6 +1,7 @@
 import plotly.graph_objects as go
 import streamlit as st
 import pandas as pd
+import plotly.express as px
 st.set_page_config(layout="wide")
 st.title("Campaigns Voting Analysis")
 st.header("Captain Voting Funnel Chart")
@@ -100,101 +101,38 @@ st.plotly_chart(fig, use_container_width=True)
 
 
 
-import plotly.graph_objects as go
-import pandas as pd
-import streamlit as st
 
-# Sample data in the form of a dictionary which should ideally come from a DataFrame for easier manipulation
+
+# Data Setup
 data = {
     'Captain': ['Ali H Ali', 'Bilal Riyad', 'Bilal Riyad', 'Bilal Riyad', 'Hasan Syed', 'Hasan Syed', 'Hasan Syed', 'Husain Mohammed', 'Mohamed Ahmed', 'Mohamed Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Samir Sarhan'],
     'Ethnicity': ['Somalia', 'Egypt', 'Jordan', 'Palestine', 'Ethiopia', 'India', 'Pakistan', 'Bangladesh', 'Bangladesh', 'Egypt', 'Brunei', 'Pakistan', 'Palestine', 'Saint Vincent and the Grenadines', 'Somalia', 'Palestine'],
-    'Total Voters': [1, 2, 1, 31, 1, 12, 100, 229, 1, 20, 1, 2, 6, 1, 1, 12],
     'Voted': [0, 2, 1, 24, 1, 11, 85, 160, 0, 13, 1, 2, 5, 0, 1, 9]
 }
 
-# Convert the dictionary to a DataFrame
 df = pd.DataFrame(data)
 
-# Grouping the data by 'Captain' and 'Ethnicity' and create a bar for each group
-fig = go.Figure()
+# Streamlit App Setup
+st.title('Voting Details with Ethnicity Labels')
 
-for captain in df['Captain'].unique():
-    captain_data = df[df['Captain'] == captain]
-    fig.add_trace(go.Bar(
-        x=captain_data['Ethnicity'],
-        y=captain_data['Total Voters'],
-        name=f'Total Voters - {captain}',
-        marker_color='blue'
-    ))
-
-    fig.add_trace(go.Bar(
-        x=captain_data['Ethnicity'],
-        y=captain_data['Voted'],
-        name=f'Voted - {captain}',
-        marker_color='lightblue'
-    ))
-
-# Update layout for clear visualization
-fig.update_layout(
-    barmode='group',
-    title="Voting Details by Captain and Ethnicity",
-    xaxis_title="Ethnicity",
-    yaxis_title="Number of Voters",
-    legend_title="Group",
-    xaxis={'categoryorder':'total descending'}
+# Generating the Bar Chart
+fig = px.bar(
+    df,
+    x="Captain",
+    y="Voted",
+    color="Ethnicity",
+    text="Ethnicity",  # Display the ethnicity names on the bars
+    title="Votes by Captain and Ethnicity"
 )
 
-# Display this plot in Streamlit
-st.title("Detailed Voting Analysis by Captain and Ethnicity")
+# Customizing the text display
+fig.update_traces(textposition='inside')
+
+# Streamlit Display
 st.plotly_chart(fig, use_container_width=True)
 
-import pandas as pd
-import plotly.express as px
-import streamlit as st
 
-# Sample data setup
-data = {
-    'Captain': ['Ali H Ali', 'Bilal Riyad', 'Bilal Riyad', 'Bilal Riyad', 'Hasan Syed', 'Hasan Syed', 'Hasan Syed', 'Husain Mohammed', 'Mohamed Ahmed', 'Mohamed Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Samir Sarhan'],
-    'Ethnicity': ['Somalia', 'Egypt', 'Jordan', 'Palestine', 'Ethiopia', 'India', 'Pakistan', 'Bangladesh', 'Bangladesh', 'Egypt', 'Brunei', 'Pakistan', 'Palestine', 'Saint Vincent and the Grenadines', 'Somalia', 'Palestine'],
-    'Voted': [0, 2, 1, 24, 1, 11, 85, 160, 0, 13, 1, 2, 5, 0, 1, 9]
-}
 
-df = pd.DataFrame(data)
-
-# Streamlit app setup
-st.title("Treemap Visualization of Captain Voting Statistics by Ethnicity")
-
-# Generate a treemap for each captain
-for captain in df['Captain'].unique():
-    fig = px.treemap(
-        df[df['Captain'] == captain],
-        path=['Captain', 'Ethnicity'],  # Hierarchical levels: captain and ethnicity
-        values='Voted',
-        title=f"Voting Distribution for {captain}"
-    )
-    st.plotly_chart(fig, use_container_width=True)
-
-# Sample data setup
-data = {
-    'Captain': ['Ali H Ali', 'Bilal Riyad', 'Bilal Riyad', 'Bilal Riyad', 'Hasan Syed', 'Hasan Syed', 'Hasan Syed', 'Husain Mohammed', 'Mohamed Ahmed', 'Mohamed Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Samir Sarhan'],
-    'Ethnicity': ['Somalia', 'Egypt', 'Jordan', 'Palestine', 'Ethiopia', 'India', 'Pakistan', 'Bangladesh', 'Bangladesh', 'Egypt', 'Brunei', 'Pakistan', 'Palestine', 'Saint Vincent and the Grenadines', 'Somalia', 'Palestine'],
-    'Voted': [0, 2, 1, 24, 1, 11, 85, 160, 0, 13, 1, 2, 5, 0, 1, 9]
-}
-
-df = pd.DataFrame(data)
-
-# Streamlit app setup
-st.title("Sunburst Visualization of Captain Voting Statistics by Ethnicity")
-
-# Generate a sunburst chart for each captain
-for captain in df['Captain'].unique():
-    fig = px.sunburst(
-        df[df['Captain'] == captain],
-        path=['Captain', 'Ethnicity'],  # Hierarchical levels: captain and ethnicity
-        values='Voted',
-        title=f"Voting Distribution for {captain}"
-    )
-    st.plotly_chart(fig, use_container_width=True)
 # Summary Information
 st.subheader("Summary Information")
 st.write("This analysis covers the flow of voters from registration to actual voting, segmented by captain leadership and ethnic groups within the voter population.")
