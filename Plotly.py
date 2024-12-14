@@ -1,7 +1,8 @@
 import plotly.graph_objects as go
 import streamlit as st
 st.set_page_config(layout="wide")
-
+st.title("Comprehensive Voting Analysis")
+st.header("Captain Voting Funnel Chart")
 # Captains and their votes
 captain_votes = {
     'Bilal Riyad': 27,
@@ -72,8 +73,7 @@ fig_ethnicities.update_layout(title_text="Voting Funnel by Ethnicity")
 # Streamlit integration for Ethnicity Funnel Chart
 st.plotly_chart(fig_ethnicities, use_container_width=True)
 # Streamlit App Layout
-st.title("Comprehensive Voting Analysis")
-st.header("Captain Voting Funnel Chart")
+
 st.plotly_chart(fig_captains, use_container_width=True)
 
 st.header("Ethnicity Voting Funnel Chart")
