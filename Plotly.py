@@ -67,15 +67,11 @@ fig_ethnicities.add_trace(go.Funnel(
     x = list(ethnicity_counts.values()),
     textinfo = "value+percent total"
 ))
-
 fig_ethnicities.update_layout(title_text="Voting Funnel by Ethnicity")
 
-# Streamlit integration for Ethnicity Funnel Chart
-st.plotly_chart(fig_ethnicities, use_container_width=True)
-# Streamlit App Layout
 
 
-st.header("Ethnicity Voting Funnel Chart")
+
 st.plotly_chart(fig_ethnicities, use_container_width=True, key='ethnicities_chart')
 
 # Summary Information
