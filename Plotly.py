@@ -1,5 +1,7 @@
 import plotly.graph_objects as go
 import streamlit as st
+import pandas as pd
+
 st.set_page_config(layout="wide")
 st.title("Campaigns Voting Analysis")
 st.header("Captain Voting Funnel Chart")
@@ -74,9 +76,6 @@ fig_ethnicities.update_layout(title_text="Voting Funnel by Ethnicity")
 
 st.plotly_chart(fig_ethnicities, use_container_width=True, key='ethnicities_chart')
 
-# Summary Information
-st.subheader("Summary Information")
-st.write("This analysis covers the flow of voters from registration to actual voting, segmented by captain leadership and ethnic groups within the voter population.")
 
 # Sample data
 captains = ["Ali H Ali", "Bilal Riyad", "Hasan Syed", "Husain Mohammed", "Mohamed Ahmed", "Nazeer Ahmed", "Samir Sarhan"]
@@ -85,19 +84,66 @@ all_statuses = [1, 34, 113, 230, 21, 11, 12]
 
 # Create the figure
 fig = go.Figure(data=[
-    go.Bar(name='Voted', x=captains, y=voted, marker_color='blue'),
-    go.Bar(name='All Statuses', x=captains, y=all_statuses, marker_color='lightblue')
+go.Bar(name='All Voters', x=captains, y=all_statuses, marker_color='lightblue'),
+    go.Bar(name='Voted Voters', x=captains, y=voted, marker_color='blue')
+
 ])
 
 # Change the bar mode
 fig.update_layout(
     barmode='group',
-    title="Captain Voting and Status Overview",
+    title="Voted voter for each Captain Overview",
     xaxis_title="Captains",
     yaxis_title="Counts",
     legend_title="Categories"
 )
-
-# Streamlit integration
-st.title('Captain Voting Statistics')
 st.plotly_chart(fig, use_container_width=True)
+
+
+# Sample data in the form of a dictionary which should ideally come from a DataFrame for easier manipulation
+data = {
+    'Captain': ['Ali H Ali', 'Bilal Riyad', 'Bilal Riyad', 'Bilal Riyad', 'Hasan Syed', 'Hasan Syed', 'Hasan Syed', 'Husain Mohammed', 'Mohamed Ahmed', 'Mohamed Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Nazeer Ahmed', 'Samir Sarhan'],
+    'Ethnicity': ['Somalia', 'Egypt', 'Jordan', 'Palestine', 'Ethiopia', 'India', 'Pakistan', 'Bangladesh', 'Bangladesh', 'Egypt', 'Brunei', 'Pakistan', 'Palestine', 'Saint Vincent and the Grenadines', 'Somalia', 'Palestine'],
+    'Total Voters': [1, 2, 1, 31, 1, 12, 100, 229, 1, 20, 1, 2, 6, 1, 1, 12],
+    'Voted': [0, 2, 1, 24, 1, 11, 85, 160, 0, 13, 1, 2, 5, 0, 1, 9]
+}
+
+# Convert the dictionary to a DataFrame
+df = pd.DataFrame(data)
+
+# Grouping the data by 'Captain' and 'Ethnicity' and create a bar for each group
+fig = go.Figure()
+
+for captain in df['Captain'].unique():
+    captain_data = df[df['Captain'] == captain]
+    fig.add_trace(go.Bar(
+        x=captain_data['Ethnicity'],
+        y=captain_data['Total Voters'],
+        name=f'Total Voters - {captain}',
+        marker_color='blue'
+    ))
+
+    fig.add_trace(go.Bar(
+        x=captain_data['Ethnicity'],
+        y=captain_data['Voted'],
+        name=f'Voted - {captain}',
+        marker_color='lightblue'
+    ))
+
+# Update layout for clear visualization
+fig.update_layout(
+    barmode='group',
+    title="Voting Details by Captain and Ethnicity",
+    xaxis_title="Ethnicity",
+    yaxis_title="Number of Voters",
+    legend_title="Group",
+    xaxis={'categoryorder':'total descending'}
+)
+
+# Display this plot in Streamlit
+st.title("Detailed Voting Analysis by Captain and Ethnicity")
+st.plotly_chart(fig, use_container_width=True)
+
+# Summary Information
+st.subheader("Summary Information")
+st.write("This analysis covers the flow of voters from registration to actual voting, segmented by captain leadership and ethnic groups within the voter population.")
