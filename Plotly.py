@@ -250,6 +250,9 @@ st.write(f"Total Muslim Votes: {muslim_voted}")
 ################### text 1
 
 
+import plotly.graph_objects as go
+import streamlit as st
+
 # Data for Text 1 campaign
 total_texts = 29125
 muslim_texted = 6405
@@ -259,19 +262,23 @@ muslim_votes = 3304
 st.title("Text 1 Campaign Analysis")
 st.subheader("Effectiveness of Campaign Targeting Muslims")
 
-# Creating the funnel chart with percentages relative to the total texts sent
+# Creating the funnel chart with hovertemplate for more detailed hover text
 fig = go.Figure(go.Funnel(
     y=["Total Texts Sent", "Muslims Texted", "Muslims Voted"],
     x=[total_texts, muslim_texted, muslim_votes],
     textposition="inside",
-    text=[f"Total Texts Sent: {total_texts} (100%)",
-          f"Muslims Texted: {muslim_texted} ({muslim_texted/total_texts*100:.2f}%)",
-          f"Muslims Voted: {muslim_votes} ({muslim_votes/total_texts*100:.2f}%)"],
-    hoverinfo="text+value"  # Adds hover effect to display both text and value
+    text=[f"Total Texts Sent: {total_texts}",
+          f"Muslims Texted: {muslim_texted}",
+          f"Muslims Voted: {muslim_votes}"],
+    hovertemplate=
+        "<b>%{label}</b><br>" +
+        "Count: %{x}<br>" +
+        "Percent of Total: %{x:" + str(total_texts) + "|.2%}<extra></extra>"
 ))
 
 fig.update_layout(title="Conversion from Texts to Votes")
 st.plotly_chart(fig, use_container_width=True)
+
 
 
 # Data setup for sunburst chart
