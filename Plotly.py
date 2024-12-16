@@ -338,9 +338,9 @@ fig = go.Figure(go.Funnel(
     x=[total_texts, muslim_texted, muslim_votes],
     textposition="inside",
     # Updated to include percentages directly in the text
-    text=[f"Total Texts Sent: {total_texts} (100%)",
-          f"Muslims Texted: {muslim_texted} ({muslim_texted / total_texts * 100:.2f}%)",
-          f"Muslims Voted: {muslim_votes} ({muslim_votes / total_texts * 100:.2f}%)"],
+    text=[f"Total Texts Sent:  (100%)",
+          f"Muslims Texted:  ({muslim_texted / total_texts * 100:.2f}%)",
+          f"Muslims Voted:  ({muslim_votes / total_texts * 100:.2f}%)"],
     hoverinfo="none"  # Optionally disable hover to keep the chart cleaner
 ))
 
