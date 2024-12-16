@@ -259,19 +259,24 @@ muslim_votes = 3304
 st.title("Text 1 Campaign Analysis")
 st.subheader("Effectiveness of Campaign Targeting Muslims")
 
-# Creating the funnel chart with hovertemplate for more detailed hover text
+# Creating the funnel chart with updated text information
 fig = go.Figure(go.Funnel(
     y=["Total Texts Sent", "Muslims Texted", "Muslims Voted"],
     x=[total_texts, muslim_texted, muslim_votes],
     textposition="inside",
-    text=[f"Total Texts Sent: {total_texts}",
-          f"Muslims Texted: {muslim_texted}",
-          f"Muslims Voted: {muslim_votes}"],
-    hovertemplate=
-        "<b>%{label}</b><br>" +
-        "Count: %{x}<br>" +
-        "Percent of Total: %{x:" + str(total_texts) + "|.2%}<extra></extra>"
+    # Updated to include percentages directly in the text
+    text=[f"Total Texts Sent: {total_texts} (100%)",
+          f"Muslims Texted: {muslim_texted} ({muslim_texted / total_texts * 100:.2f}%)",
+          f"Muslims Voted: {muslim_votes} ({muslim_votes / total_texts * 100:.2f}%)"],
+    hoverinfo="none"  # Optionally disable hover to keep the chart cleaner
 ))
+
+fig.update_layout(
+    title="Conversion from Texts to Votes",
+    # Adjusting the layout to make the text more readable
+    funnelgap=0.1,  # Adjust the space between segments
+    funnelgroupgap=0.1  # Adjust the space between groups
+)
 
 fig.update_layout(title="Conversion from Texts to Votes")
 st.plotly_chart(fig, use_container_width=True)
@@ -327,19 +332,24 @@ st.title("Text 2 Campaign Analysis")
 st.subheader("Effectiveness of Campaign Targeting Muslims")
 
 # Creating the funnel chart with hovertemplate for more detailed hover text
+# Creating the funnel chart with updated text information
 fig = go.Figure(go.Funnel(
     y=["Total Texts Sent", "Muslims Texted", "Muslims Voted"],
     x=[total_texts, muslim_texted, muslim_votes],
     textposition="inside",
-    text=[f"Total Texts Sent: {total_texts}",
-          f"Muslims Texted: {muslim_texted}",
-          f"Muslims Voted: {muslim_votes}"],
-    hovertemplate=
-        "<b>%{label}</b><br>" +
-        "Count: %{x}<br>" +
-        "Percent of Total: %{x:" + str(total_texts) + "|.2%}<extra></extra>"
+    # Updated to include percentages directly in the text
+    text=[f"Total Texts Sent: {total_texts} (100%)",
+          f"Muslims Texted: {muslim_texted} ({muslim_texted / total_texts * 100:.2f}%)",
+          f"Muslims Voted: {muslim_votes} ({muslim_votes / total_texts * 100:.2f}%)"],
+    hoverinfo="none"  # Optionally disable hover to keep the chart cleaner
 ))
 
+fig.update_layout(
+    title="Conversion from Texts to Votes",
+    # Adjusting the layout to make the text more readable
+    funnelgap=0.1,  # Adjust the space between segments
+    funnelgroupgap=0.1  # Adjust the space between groups
+)
 fig.update_layout(title="Conversion from Texts to Votes")
 st.plotly_chart(fig, use_container_width=True)
 
