@@ -126,9 +126,9 @@ for index, (captain, values) in enumerate(data.items()):
     fig = go.Figure(go.Funnel(
         y=["Total", "Voted in Nov", "Voted in Nov & Not Voted in Aug"],
         x=[total, voted_nov, voted_nov_not_aug],
-        text=[f"Total: {total}",
-              f"Voted in Nov: {voted_nov} ({percent_voted_nov}%)",
-              f"Voted in Nov & Not Voted in Aug: {voted_nov_not_aug} ({percent_voted_nov_not_aug}%)"],
+        text=[f"Total:",
+              f"Voted in Nov: ({percent_voted_nov}%)",
+              f"Voted in Nov & Not in Aug: ({percent_voted_nov_not_aug}%)"],
         textposition="inside"
     ))
 
