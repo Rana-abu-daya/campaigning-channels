@@ -384,7 +384,7 @@ with col1:
 with col2:
     st.subheader("Percentage of Muslims Voted from Texted")
     labels = ['Muslims Voted', 'Muslims Not Voted']
-    values = [muslim_votes, muslim_texted - muslim_votes]
+    values = [muslim_votes_nov, muslim_texted - muslim_votes_nov]
     colors = ['lightcoral', 'lightgrey']
 
     fig2 = go.Figure(data=[go.Pie(labels=labels, values=values, hole=.4)])
@@ -397,7 +397,7 @@ with col2:
 st.write("Summary Information")
 st.write(f"Total Texts Sent: {total_texts:,}")
 st.write(f"Total Muslims Texted: {muslim_texted:,}")
-st.write(f"Total Muslims Voted: {muslim_votes:,}")
+st.write(f"Total Muslims Voted: {muslim_votes_nov:,}")
 
 
 
