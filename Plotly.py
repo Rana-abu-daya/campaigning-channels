@@ -39,6 +39,10 @@ captain_votes = {
 #
 # fig_captains.update_layout(title_text="Voting Funnel for Captains")
 # st.plotly_chart(fig_captains, use_container_width=True, key='captains_chart')
+
+total_voters = 423
+voted = 315
+voted_nov_not_aug = 165
 # Creating the funnel chart
 fig = go.Figure()
 
