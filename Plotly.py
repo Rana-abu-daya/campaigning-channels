@@ -170,7 +170,7 @@ fig = px.bar(
     y="Visual Length",  # Use the normalized length for display
     color="Ethnicity",
     text="Percentage",  # Display computed percentages on the bars
-    title="Votes by Captain and Ethnicity (Uniform Bar Lengths)"
+    title="Votes by Captain and Ethnicity"
 )
 
 # Update layout for text inside bars and hover info for actual votes
@@ -186,9 +186,6 @@ fig.update_yaxes(showticklabels=False, title='')
 # Display the plot in Streamlit
 st.plotly_chart(fig, use_container_width=True)
 
-# Summary Information
-st.subheader("Summary Information")
-st.write("This analysis covers the flow of voters from registration to actual voting, segmented by captain leadership and ethnic groups within the voter population.")
 ####################  phone bakning
 
 import plotly.graph_objects as go
