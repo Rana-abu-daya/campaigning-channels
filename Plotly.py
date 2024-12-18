@@ -5,7 +5,7 @@ import plotly.express as px
 
 st.set_page_config(layout="wide")
 st.title("Campaigns Voting Analysis")
-st.header("Captain Voting Funnel Chart")
+st.header("Captain Voting")
 # Captains and their votes
 captain_votes = {
     'Bilal Riyad': 27,
@@ -16,29 +16,61 @@ captain_votes = {
     'Samir Sarhan': 9
 }
 
-# Total voters and those who voted
-total_voters = 423
-voted = 315
+# # Total voters and those who voted
+# total_voters = 423
+# voted = 315
+# VotedNovNOTAUG = 165
+# # Funnel chart for captains
+# fig_captains = go.Figure()
+#
+# fig_captains.add_trace(go.Funnel(
+#     name = 'Voting Progress',
+#     y = ["Total Voters", "Voted"],
+#     x = [total_voters, voted],
+#     textinfo = "value+percent previous"
+# ))
+#
+# fig_captains.add_trace(go.Funnel(
+#     name = 'By Captains',
+#     y = list(captain_votes.keys()),
+#     x = list(captain_votes.values()),
+#     textinfo = "value+percent total"
+# ))
+#
+# fig_captains.update_layout(title_text="Voting Funnel for Captains")
+# st.plotly_chart(fig_captains, use_container_width=True, key='captains_chart')
+# Creating the funnel chart
+fig = go.Figure()
 
-# Funnel chart for captains
-fig_captains = go.Figure()
-
-fig_captains.add_trace(go.Funnel(
-    name = 'Voting Progress',
-    y = ["Total Voters", "Voted"],
-    x = [total_voters, voted],
-    textinfo = "value+percent previous"
+# Total Voters to Voted
+fig.add_trace(go.Funnel(
+    name='Total to Voted',
+    y=["Total Voters", "Voted"],
+    x=[total_voters, voted],
+    text=[f"Total Voters: {total_voters}",
+          f"Voted: {voted} ({voted / total_voters * 100:.2f}%)"],
+    textposition="inside"
 ))
 
-fig_captains.add_trace(go.Funnel(
-    name = 'By Captains',
-    y = list(captain_votes.keys()),
-    x = list(captain_votes.values()),
-    textinfo = "value+percent total"
+# Voted to Voted in November but not August
+fig.add_trace(go.Funnel(
+    name='Voted to Voted Nov Not Aug',
+    y=["Voted", "Voted in Nov (Not Aug)"],
+    x=[voted, voted_nov_not_aug],
+    text=[f"Voted: {voted}",
+          f"Voted in Nov (Not Aug): {voted_nov_not_aug} ({voted_nov_not_aug / total_voters * 100:.2f}%)"],
+    textposition="inside",
+    connector={"line": {"color": "royalblue", "dash": "solid", "width": 3}}  # Styling the connector for clarity
 ))
 
-fig_captains.update_layout(title_text="Voting Funnel for Captains")
-st.plotly_chart(fig_captains, use_container_width=True, key='captains_chart')
+fig.update_layout(
+    title="Voting Progression Analysis",
+    funnelmode="stack"  # Ensures all segments are visualized in a straightforward stacked manner
+)
+
+# Display the chart in Streamlit
+st.plotly_chart(fig, use_container_width=True)
+
 
 # Streamlit integration for Captains Funnel Chart
 # Data setup for ethnicities
