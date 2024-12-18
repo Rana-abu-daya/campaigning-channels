@@ -56,9 +56,9 @@ fig.add_trace(go.Funnel(
     y=["Total Voters", "Voted", "Voted in Nov (Not Aug)"],
     x=[total_voters, voted, voted_nov_not_aug],
     text=[
-        f"Total Voters: {total_voters} (100%)",
-        f"Voted: {voted} ({ceil(voted / total_voters * 100)}%)",
-        f"Voted in Nov (Not Aug): {voted_nov_not_aug} ({ceil(voted_nov_not_aug / total_voters * 100)}%)"
+        f"(100%)",
+        f"({ceil(voted / total_voters * 100)}%)",
+        f"({ceil(voted_nov_not_aug / total_voters * 100)}%)"
     ],
     textposition="inside"
 ))
@@ -336,7 +336,7 @@ muslim_votes_nov = 3310
 muslim_votes_nov_not_aug = 2374
 
 # Streamlit App Setup
-st.subheader("Text 1 Campaign Analysis")
+st.title("Text 1 Campaign Analysis")
 
 
 # Creating the funnel chart with updated data and percentages
@@ -409,7 +409,7 @@ muslim_votes_nov = 3495
 muslim_votes_nov_not_aug = 2397
 
 # Streamlit App Setup
-st.subheader("Text 2 Campaign Analysis")
+st.title("Text 2 Campaign Analysis")
 
 
 # Creating the funnel chart with updated data and percentages
