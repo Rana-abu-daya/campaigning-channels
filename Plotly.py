@@ -247,12 +247,13 @@ st.plotly_chart(fig, use_container_width=True)
 # Call data including failed categories and completed
 call_data = {
     'machine_detection': 5381,
+    'hungup': 26,
     'failed': 1144,
     'completed': 880,
     'no-answer': 573,
     'busy': 194,
-    'declined': 46,
-    'hungup': 26
+    'declined': 46
+
 }
 
 # Calculate total failed by subtracting completed from total
