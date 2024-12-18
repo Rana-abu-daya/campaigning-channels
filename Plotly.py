@@ -293,8 +293,7 @@ completed_duration_16 = 607
 muslim_voted = 247
 muslim_voted_nov_not_aug = 195
 
-# Streamlit App Setup
-st.header("Analysis of Completed Calls")
+
 
 # Creating the funnel chart
 fig = go.Figure()
@@ -315,7 +314,7 @@ fig.add_trace(go.Funnel(
 
 # Update layout settings to enhance the visual
 fig.update_layout(
-    title="Funnel Chart of Completed Calls",
+    title="Analysis of Completed Calls",
     funnelmode="stack"  # Ensures the funnel segments are displayed in a stacked format
 )
 
