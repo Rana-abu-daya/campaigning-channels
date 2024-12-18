@@ -202,7 +202,7 @@ fig.add_trace(go.Funnel(
     name="Total Calls",
     y=["Total Calls"],
     x=[total_calls],
-    text=[f"Total Calls: {total_calls} (100%)"],
+    text=[f"(100%)"],
     textposition="inside"
 ))
 
@@ -211,7 +211,7 @@ fig.add_trace(go.Funnel(
     name="Failed Calls",
     y=["Failed Calls"],
     x=[failed_calls],
-    text=[f"Failed Calls: {failed_calls} ({ceil(failed_calls / total_calls * 100)}%)"],
+    text=[f"({ceil(failed_calls / total_calls * 100)}%)"],
     textposition="inside"
 ))
 
@@ -220,7 +220,7 @@ fig.add_trace(go.Funnel(
     name="Completed Calls",
     y=["Completed Calls"],
     x=[completed_calls],
-    text=[f"Completed Calls: {completed_calls} ({ceil(completed_calls / total_calls * 100)}%)"],
+    text=[f"({ceil(completed_calls / total_calls * 100)}%)"],
     textposition="inside"
 ))
 
@@ -229,7 +229,7 @@ fig.add_trace(go.Funnel(
     name="Long Duration Completed Calls",
     y=["Long Duration Completed Calls"],
     x=[completed_calls_long_duration],
-    text=[f"Long Duration Completed Calls: {completed_calls_long_duration} ({ceil(completed_calls_long_duration / total_calls * 100)}%)"],
+    text=[f"({ceil(completed_calls_long_duration / total_calls * 100)}%)"],
     textposition="inside"
 ))
 
