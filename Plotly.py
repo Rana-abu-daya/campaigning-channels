@@ -75,67 +75,71 @@ fig.update_layout(
 # Display the chart in Streamlit
 st.plotly_chart(fig, use_container_width=True)
 
+################# Captain and Ethnicity
+# # Sample data
+# captains = ["Ali H Ali", "Bilal Riyad", "Hasan Syed", "Husain Mohammed", "Mohamed Ahmed", "Nazeer Ahmed", "Samir Sarhan"]
+# voted = [0, 27, 97, 160, 13, 9, 9]
+# all_statuses = [1, 34, 113, 230, 21, 11, 12]
+#
+# # Create the figure
+# fig = go.Figure(data=[
+# go.Bar(name='Approached Voters', x=captains, y=all_statuses, marker_color='lightblue'),
+#     go.Bar(name='Voted Voters', x=captains, y=voted, marker_color='blue')
+#
+# ])
+#
+# # Change the bar mode
+# fig.update_layout(
+#     barmode='group',
+#     title="Voted voter for each Captain Overview",
+#     xaxis_title="Captains",
+#     yaxis_title="Counts",
+#     legend_title="Categories"
+# )
+# st.plotly_chart(fig, use_container_width=True)
 
 
-# Streamlit integration for Captains Funnel Chart
-# Data setup for ethnicities
-ethnicity_counts = {
-    'Bangladesh': 160,
-    'Pakistan': 87,
-    'Palestine': 38,
-    'Egypt': 15,
-    'India': 11,
-    'Brunei': 1,
-    'Ethiopia': 1,
-    'Somalia': 1,
-    'Jordan': 1
+# Captain data
+data = {
+    'Ali H Ali': {'Total': 1, 'Voted in Nov': 0, 'Voted in Nov & Not Voted in Aug': 0},
+    'Bilal Riyad': {'Total': 34, 'Voted in Nov': 27, 'Voted in Nov & Not Voted in Aug': 23},
+    'Hasan Syed': {'Total': 113, 'Voted in Nov': 97, 'Voted in Nov & Not Voted in Aug': 44},
+    'Husain Mohammed': {'Total': 230, 'Voted in Nov': 160, 'Voted in Nov & Not Voted in Aug': 87},
+    'Mohamed Ahmed': {'Total': 21, 'Voted in Nov': 13, 'Voted in Nov & Not Voted in Aug': 5},
+    'Nazeer Ahmed': {'Total': 11, 'Voted in Nov': 9, 'Voted in Nov & Not Voted in Aug': 1}
 }
 
-# Funnel chart for ethnicities
-fig_ethnicities = go.Figure()
+# Streamlit title and setup
+st.title("Captain-Specific Voting Analysis")
 
-fig_ethnicities.add_trace(go.Funnel(
-    name = 'Voting Progress',
-    y = ["Total Voters", "Voted"],
-    x = [total_voters, voted],
-    textinfo = "value+percent previous"
-))
+# Iterate over each captain's data to create separate funnel charts
+for index, (captain, values) in enumerate(data.items()):
+    total = values['Total']
+    voted_nov = values['Voted in Nov']
+    voted_nov_not_aug = values['Voted in Nov & Not Voted in Aug']
 
-fig_ethnicities.add_trace(go.Funnel(
-    name = 'By Ethnicity',
-    y = list(ethnicity_counts.keys()),
-    x = list(ethnicity_counts.values()),
-    textinfo = "value+percent total"
-))
-fig_ethnicities.update_layout(title_text="Voting Funnel by Ethnicity")
+    # Calculate percentages
+    percent_voted_nov = ceil(voted_nov / total * 100) if total > 0 else 0
+    percent_voted_nov_not_aug = ceil(voted_nov_not_aug / total * 100) if total > 0 else 0
 
+    # Creating funnel chart for each captain
+    fig = go.Figure(go.Funnel(
+        y=["Total", "Voted in Nov", "Voted in Nov & Not Voted in Aug"],
+        x=[total, voted_nov, voted_nov_not_aug],
+        text=[f"Total: {total}",
+              f"Voted in Nov: {voted_nov} ({percent_voted_nov}%)",
+              f"Voted in Nov & Not Voted in Aug: {voted_nov_not_aug} ({percent_voted_nov_not_aug}%)"],
+        textposition="inside"
+    ))
 
+    fig.update_layout(title=f"Voting Funnel for {captain}")
 
+    # Use Streamlit columns to display two charts per row
+    if index % 2 == 0:
+        col1, col2 = st.columns(2)
 
-st.plotly_chart(fig_ethnicities, use_container_width=True, key='ethnicities_chart')
-
-
-# Sample data
-captains = ["Ali H Ali", "Bilal Riyad", "Hasan Syed", "Husain Mohammed", "Mohamed Ahmed", "Nazeer Ahmed", "Samir Sarhan"]
-voted = [0, 27, 97, 160, 13, 9, 9]
-all_statuses = [1, 34, 113, 230, 21, 11, 12]
-
-# Create the figure
-fig = go.Figure(data=[
-go.Bar(name='Approached Voters', x=captains, y=all_statuses, marker_color='lightblue'),
-    go.Bar(name='Voted Voters', x=captains, y=voted, marker_color='blue')
-
-])
-
-# Change the bar mode
-fig.update_layout(
-    barmode='group',
-    title="Voted voter for each Captain Overview",
-    xaxis_title="Captains",
-    yaxis_title="Counts",
-    legend_title="Categories"
-)
-st.plotly_chart(fig, use_container_width=True)
+    with col1 if index % 2 == 0 else col2:
+        st.plotly_chart(fig, use_container_width=True)
 
 ############ Rana
 # Sample data setup
