@@ -286,40 +286,43 @@ fig_pie.update_layout(
 st.plotly_chart(fig_pie, use_container_width=True)
 
 
-# Completed calls and breakdown
-completed_calls = 880
-muslim_voted = 247
-non_muslim_voted = completed_calls - muslim_voted  # Calculate non-Muslim votes
 
-# Create the funnel chart
+# Data for the completed call analysis
+total_completed = 880
+completed_duration_16 = 607
+muslim_voted = 247
+muslim_voted_nov_not_aug = 195
+
+# Streamlit App Setup
+st.header("Analysis of Completed Calls")
+
+# Creating the funnel chart
 fig = go.Figure()
 
-# Adding data to the funnel chart
+# Adding total completed calls
 fig.add_trace(go.Funnel(
-    name='Completed Calls Breakdown',
-    y=['Completed Calls', 'Muslim Voted', 'Non-Muslim Voted'],
-    x=[completed_calls, muslim_voted, non_muslim_voted],
-    textposition="inside",
-    text=[f"Completed Calls: {completed_calls}",
-          f"Muslim Voted: {muslim_voted} ({muslim_voted/completed_calls*100:.2f}%)",
-          f"Non-Muslim Voted: {non_muslim_voted} ({non_muslim_voted/completed_calls*100:.2f}%)"]
+    name='Total Completed Calls',
+    y=["Total Completed Calls", "Long Duration >= 16s", "Muslims Voted", "Muslims Voted in Nov (Not Aug)"],
+    x=[total_completed, completed_duration_16, muslim_voted, muslim_voted_nov_not_aug],
+    text=[
+        f"(100%)",
+        f"({ceil(completed_duration_16 / total_completed * 100)}%)",
+        f"({ceil(muslim_voted / total_completed * 100)}%)",
+        f"({ceil(muslim_voted_nov_not_aug / total_completed * 100)}%)"
+    ],
+    textposition="inside"
 ))
 
-# Update layout
+# Update layout settings to enhance the visual
 fig.update_layout(
-    title="Breakdown of Completed Calls",
-    funnelmode="stack"
+    title="Funnel Chart of Completed Calls",
+    funnelmode="stack"  # Ensures the funnel segments are displayed in a stacked format
 )
 
-# Display in Streamlit
-st.title("Detailed Analysis of Completed Calls")
+# Display the funnel chart in Streamlit
 st.plotly_chart(fig, use_container_width=True)
-completed = 880
-# Summary information
-st.write("Summary Information")
-st.write(f"Total Calls: 8244")
-st.write(f"Total Completed Calls: {completed}")
-st.write(f"Total Muslim Votes: {muslim_voted}")
+
+
 ##############  End PHone banking
 
 
