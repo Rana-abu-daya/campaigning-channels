@@ -2,6 +2,7 @@ import plotly.graph_objects as go
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+from math import ceil
 
 st.set_page_config(layout="wide")
 st.title("Campaigns Voting Analysis")
@@ -40,40 +41,40 @@ captain_votes = {
 # fig_captains.update_layout(title_text="Voting Funnel for Captains")
 # st.plotly_chart(fig_captains, use_container_width=True, key='captains_chart')
 
+
+# Data for the campaign
 total_voters = 423
 voted = 315
 voted_nov_not_aug = 165
+
+# Streamlit App Setup
+st.title("Voting Funnel Analysis")
+st.subheader("Overview of Voting Progress")
+
 # Creating the funnel chart
 fig = go.Figure()
 
 # Total Voters to Voted
 fig.add_trace(go.Funnel(
     name='Total to Voted',
-    y=["Total Voters", "Voted"],
-    x=[total_voters, voted],
-    text=[f"Total Voters: {total_voters}",
-          f"Voted: {voted} ({voted / total_voters * 100:.2f}%)"],
+    y=["Total Voters", "Voted", "Voted in Nov (Not Aug)"],
+    x=[total_voters, voted, voted_nov_not_aug],
+    text=[
+        f"Total Voters: {total_voters} (100%)",
+        f"Voted: {voted} ({ceil(voted / total_voters * 100)}%)",
+        f"Voted in Nov (Not Aug): {voted_nov_not_aug} ({ceil(voted_nov_not_aug / total_voters * 100)}%)"
+    ],
     textposition="inside"
-))
-
-# Voted to Voted in November but not August
-fig.add_trace(go.Funnel(
-    name='Voted to Voted Nov Not Aug',
-    y=["Voted", "Voted in Nov (Not Aug)"],
-    x=[voted, voted_nov_not_aug],
-    text=[f"Voted: {voted}",
-          f"Voted in Nov (Not Aug): {voted_nov_not_aug} ({voted_nov_not_aug / total_voters * 100:.2f}%)"],
-    textposition="inside",
-    connector={"line": {"color": "royalblue", "dash": "solid", "width": 3}}  # Styling the connector for clarity
 ))
 
 fig.update_layout(
     title="Voting Progression Analysis",
-    funnelmode="stack"  # Ensures all segments are visualized in a straightforward stacked manner
+    funnelmode="stack"  # This setting will align all parts of the funnel vertically
 )
 
 # Display the chart in Streamlit
 st.plotly_chart(fig, use_container_width=True)
+
 
 
 # Streamlit integration for Captains Funnel Chart
