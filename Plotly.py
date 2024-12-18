@@ -244,42 +244,36 @@ st.plotly_chart(fig, use_container_width=True)
 ############# Failed pie chart #############
 
 
-# Call data including failed categories and completed
-call_data = {
-    'machine_detection': 5381,
-    'hungup': 26,
-    'failed': 1144,
-    'completed': 880,
-    'no-answer': 573,
-    'busy': 194,
-    'declined': 46
 
-}
+# Data for the pie chart
+labels = ['machine_detection', 'failed', 'no-answer', 'busy', 'declined', 'hungup']
+values = [5381, 1144, 573, 194, 46, 26]
+total_failed = sum(values)  # Ensure this matches the sum of your values if not recalculated
 
-# Calculate total failed by subtracting completed from total
-total_failed = sum(value for key, value in call_data.items() if key != 'completed')
-
-# Streamlit App Setup
-
-# Creating the pie chart for failed call types
-failed_labels = [key for key in call_data if key != 'completed']
-failed_values = [value for key, value in call_data.items() if key != 'completed']
-
+# Creating the pie chart with improved label management
 fig_pie = go.Figure(data=[go.Pie(
-    labels=failed_labels,
-    values=failed_values,
+    labels=labels,
+    values=values,
     hoverinfo='label+percent',
-    textinfo='label+value+percent',
+    textinfo='none',  # Turning off text labels on the pie pieces
     hole=.4  # Creating a donut-style pie chart
 )])
 
+fig_pie.update_traces(textposition='inside')
+
+# Update layout to use a legend and improve its readability
 fig_pie.update_layout(
-    title="Breakdown of Failed Calls",
-    annotations=[{
-        'text': f'{total_failed}',
-        'showarrow': False,
-        'font': {'size': 20}
-    }]
+    title_text="Breakdown of Failed Calls",
+    legend_title_text='Call Outcome',
+    legend=dict(
+        x=0.9,  # Adjust legend position to not overlap with the chart
+        y=0.5,
+        font=dict(
+            family="Arial",
+            size=12,
+            color="black"
+        )
+    )
 )
 
 # Display the pie chart in Streamlit
