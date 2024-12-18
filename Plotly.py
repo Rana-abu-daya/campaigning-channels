@@ -47,10 +47,6 @@ total_voters = 423
 voted = 315
 voted_nov_not_aug = 165
 
-# Streamlit App Setup
-st.title("Voting Funnel Analysis")
-st.subheader("Overview of Voting Progress")
-
 # Creating the funnel chart
 fig = go.Figure()
 
