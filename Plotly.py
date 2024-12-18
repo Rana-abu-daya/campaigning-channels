@@ -329,35 +329,37 @@ st.plotly_chart(fig, use_container_width=True)
 ################### text 1
 
 
-# Data for Text 1 campaign
+# Updated data for Text 1 campaign
 total_texts = 29125
-muslim_texted = 6405
-muslim_votes = 3304
+muslim_texted = 6407
+muslim_votes_nov = 3310
+muslim_votes_nov_not_aug = 2374
 
 # Streamlit App Setup
-st.title("Text 1 Campaign Analysis")
-st.subheader("Effectiveness of Campaign Targeting Muslims")
+st.subheader("Text 1 Campaign Analysis")
 
-# Creating the funnel chart with updated text information
+
+# Creating the funnel chart with updated data and percentages
 fig = go.Figure(go.Funnel(
-    y=["Total Texts Sent", "Muslims Texted", "Muslims Voted"],
-    x=[total_texts, muslim_texted, muslim_votes],
-    textposition="inside",
-    # Updated to include percentages directly in the text
-    text=[f"Total Texts Sent:  (100%)",
-          f"Muslims Texted:  ({muslim_texted / total_texts * 100:.2f}%)",
-          f"Muslims Voted:  ({muslim_votes / total_texts * 100:.2f}%)"],
-    hoverinfo="none"  # Optionally disable hover to keep the chart cleaner
+    y=["Total Texts Sent", "Muslims Texted", "Muslims Voted in Nov", "Muslims Voted in Nov (Not Aug)"],
+    x=[total_texts, muslim_texted, muslim_votes_nov, muslim_votes_nov_not_aug],
+    text=[
+        f" (100%)",
+        f" ({ceil(muslim_texted / total_texts * 100)}%)",
+        f"({ceil(muslim_votes_nov / total_texts * 100)}%)",
+        f" ({ceil(muslim_votes_nov_not_aug / total_texts * 100)}%)"
+    ],
+    textposition="inside"
 ))
 
 fig.update_layout(
     title="Conversion from Texts to Votes",
-    # Adjusting the layout to make the text more readable
-    funnelgap=0.1,  # Adjust the space between segments
-    funnelgroupgap=0.1  # Adjust the space between groups
+    funnelmode="stack",  # Ensure all segments are visualized in a stacked manner
+    funnelgap=0.05,  # Slightly reduce the gap between segments for a tighter visual
+    funnelgroupgap=0.05  # Keep the group gap consistent
 )
 
-fig.update_layout(title="Conversion from Texts to Votes")
+# Display the funnel chart in Streamlit
 st.plotly_chart(fig, use_container_width=True)
 
 
