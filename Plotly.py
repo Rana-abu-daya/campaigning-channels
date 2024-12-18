@@ -106,7 +106,7 @@ data = {
 }
 
 # Streamlit title and setup
-st.title("Captain-Specific Voting Analysis")
+st.header("Captain-Specific Voting Analysis")
 
 # Iterate over each captain's data to create separate funnel charts
 for index, (captain, values) in enumerate(data.items()):
