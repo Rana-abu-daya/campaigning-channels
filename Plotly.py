@@ -157,7 +157,7 @@ df['Percentage'] = (df['Voted'] / df['Total Votes by Captain'] * 100).round(2).a
 df['Visual Length'] = df['Voted'].apply(lambda x: 1 if x > 0 else 0)
 
 # Streamlit App Setup
-st.title('Voting Percentages by Captain and Ethnicity')
+st.header('Voting Percentages by Captain and Ethnicity')
 
 # Generating the Bar Chart
 fig = px.bar(
