@@ -259,7 +259,6 @@ call_data = {
 total_failed = sum(value for key, value in call_data.items() if key != 'completed')
 
 # Streamlit App Setup
-st.title("Phone Banking Campaign Analysis")
 
 # Creating the pie chart for failed call types
 failed_labels = [key for key in call_data if key != 'completed']
@@ -276,7 +275,7 @@ fig_pie = go.Figure(data=[go.Pie(
 fig_pie.update_layout(
     title="Breakdown of Failed Calls",
     annotations=[{
-        'text': f'Total Failed: {total_failed}',
+        'text': f'{total_failed}',
         'showarrow': False,
         'font': {'size': 20}
     }]
