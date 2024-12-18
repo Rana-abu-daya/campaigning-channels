@@ -184,61 +184,122 @@ st.plotly_chart(fig, use_container_width=True)
 
 ####################  phone bakning
 
-import plotly.graph_objects as go
-import streamlit as st
 
-# Results data
-results = {
-    'busy': 194,
-    'completed': 880,
-    'declined': 46,
-    'failed': 1144,
-    'hungup': 26,
-    'machine_detection': 5381,
-    'no-answer': 573
-}
+# Specific results data
+total_calls = 8244
+failed_calls = 7364
+completed_calls = 880
+completed_calls_long_duration = 607  # Assuming 'Duration (Seconds)' >= 16
 
-# Fixed total number of calls as specified
-fixed_total_calls = 8244
+# Streamlit App Setup
+st.title("Phone Banking Campaign Analysis")
 
-# Add 'Total' to results with the fixed total number
-results['total'] = fixed_total_calls
-
-# Sort results from largest to smallest, including the total
-sorted_results = dict(sorted(results.items(), key=lambda item: item[1], reverse=True))
-
-# Create a funnel chart for the phone banking results
+# Creating the funnel chart
 fig = go.Figure()
 
-# We will calculate percentages manually based on the fixed total
-for key, value in sorted_results.items():
-    percentage = (value / fixed_total_calls * 100)  # Calculate percentage of the fixed total
-    label = f"{key} ({percentage:.2f}%)"
-    fig.add_trace(go.Funnel(
-        name=key,
-        y=[key],
-        x=[value],
-        text=[label],
-        textposition="inside"
-    ))
+# Adding total calls
+fig.add_trace(go.Funnel(
+    name="Total Calls",
+    y=["Total Calls"],
+    x=[total_calls],
+    text=[f"Total Calls: {total_calls} (100%)"],
+    textposition="inside"
+))
 
-# Update layout to improve appearance
+# Adding failed calls
+fig.add_trace(go.Funnel(
+    name="Failed Calls",
+    y=["Failed Calls"],
+    x=[failed_calls],
+    text=[f"Failed Calls: {failed_calls} ({ceil(failed_calls / total_calls * 100)}%)"],
+    textposition="inside"
+))
+
+# Adding completed calls
+fig.add_trace(go.Funnel(
+    name="Completed Calls",
+    y=["Completed Calls"],
+    x=[completed_calls],
+    text=[f"Completed Calls: {completed_calls} ({ceil(completed_calls / total_calls * 100)}%)"],
+    textposition="inside"
+))
+
+# Adding completed calls with long duration
+fig.add_trace(go.Funnel(
+    name="Long Duration Completed Calls",
+    y=["Long Duration Completed Calls"],
+    x=[completed_calls_long_duration],
+    text=[f"Long Duration Completed Calls: {completed_calls_long_duration} ({ceil(completed_calls_long_duration / total_calls * 100)}%)"],
+    textposition="inside"
+))
+
 fig.update_layout(
-    title="Phone Banking Campaign Analysis",
-    funnelmode="stack",  # Stacked mode to show all segments at the same scale
-    annotations=[dict(
-        x=0.5,
-        y=-0.15,
-        showarrow=False,
-        text=f"Total Calls: {fixed_total_calls}",
-        xref="paper",
-        yref="paper"
-    )]
+    title="Detailed Analysis of Phone Banking Campaign Results",
+    funnelmode="stack"
 )
 
-# Streamlit setup for displaying the funnel chart
-st.title("Detailed Campaign Results")
+# Display the funnel chart in Streamlit
 st.plotly_chart(fig, use_container_width=True)
+
+
+# Specific results data
+total_calls = 8244
+failed_calls = 7364
+completed_calls = 880
+completed_calls_long_duration = 607  # Assuming 'Duration (Seconds)' >= 16
+
+# Streamlit App Setup
+st.title("Phone Banking Campaign Analysis")
+
+# Creating the funnel chart
+fig = go.Figure()
+
+# Adding total calls
+fig.add_trace(go.Funnel(
+    name="Total Calls",
+    y=["Total Calls"],
+    x=[total_calls],
+    text=[f"Total Calls: {total_calls} (100%)"],
+    textposition="inside"
+))
+
+# Adding failed calls
+fig.add_trace(go.Funnel(
+    name="Failed Calls",
+    y=["Failed Calls"],
+    x=[failed_calls],
+    text=[f"Failed Calls: {failed_calls} ({ceil(failed_calls / total_calls * 100)}%)"],
+    textposition="inside"
+))
+
+# Adding completed calls
+fig.add_trace(go.Funnel(
+    name="Completed Calls",
+    y=["Completed Calls"],
+    x=[completed_calls],
+    text=[f"Completed Calls: {completed_calls} ({ceil(completed_calls / total_calls * 100)}%)"],
+    textposition="inside"
+))
+
+# Adding completed calls with long duration
+fig.add_trace(go.Funnel(
+    name="Long Duration Completed Calls",
+    y=["Long Duration Completed Calls"],
+    x=[completed_calls_long_duration],
+    text=[f"Long Duration Completed Calls: {completed_calls_long_duration} ({ceil(completed_calls_long_duration / total_calls * 100)}%)"],
+    textposition="inside"
+))
+
+fig.update_layout(
+    title="Detailed Analysis of Phone Banking Campaign Results",
+    funnelmode="stack"
+)
+
+# Display the funnel chart in Streamlit
+st.plotly_chart(fig, use_container_width=True)
+
+
+
 
 import plotly.graph_objects as go
 import streamlit as st
