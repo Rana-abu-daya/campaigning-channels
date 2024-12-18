@@ -242,67 +242,6 @@ fig.update_layout(
 st.plotly_chart(fig, use_container_width=True)
 
 
-# Specific results data
-total_calls = 8244
-failed_calls = 7364
-completed_calls = 880
-completed_calls_long_duration = 607  # Assuming 'Duration (Seconds)' >= 16
-
-# Streamlit App Setup
-st.title("Phone Banking Campaign Analysis")
-
-# Creating the funnel chart
-fig = go.Figure()
-
-# Adding total calls
-fig.add_trace(go.Funnel(
-    name="Total Calls",
-    y=["Total Calls"],
-    x=[total_calls],
-    text=[f"Total Calls: {total_calls} (100%)"],
-    textposition="inside"
-))
-
-# Adding failed calls
-fig.add_trace(go.Funnel(
-    name="Failed Calls",
-    y=["Failed Calls"],
-    x=[failed_calls],
-    text=[f"Failed Calls: {failed_calls} ({ceil(failed_calls / total_calls * 100)}%)"],
-    textposition="inside"
-))
-
-# Adding completed calls
-fig.add_trace(go.Funnel(
-    name="Completed Calls",
-    y=["Completed Calls"],
-    x=[completed_calls],
-    text=[f"Completed Calls: {completed_calls} ({ceil(completed_calls / total_calls * 100)}%)"],
-    textposition="inside"
-))
-
-# Adding completed calls with long duration
-fig.add_trace(go.Funnel(
-    name="Long Duration Completed Calls",
-    y=["Long Duration Completed Calls"],
-    x=[completed_calls_long_duration],
-    text=[f"Long Duration Completed Calls: {completed_calls_long_duration} ({ceil(completed_calls_long_duration / total_calls * 100)}%)"],
-    textposition="inside"
-))
-
-fig.update_layout(
-    title="Detailed Analysis of Phone Banking Campaign Results",
-    funnelmode="stack"
-)
-
-# Display the funnel chart in Streamlit
-st.plotly_chart(fig, use_container_width=True)
-
-
-
-
-import plotly.graph_objects as go
-import streamlit as st
 
 # Completed calls and breakdown
 completed_calls = 880
