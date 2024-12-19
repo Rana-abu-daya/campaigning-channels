@@ -188,8 +188,8 @@ st.plotly_chart(fig, use_container_width=True)
 total_calls = 8244
 failed_calls = 7364
 completed_calls = 880
-completed_calls_long_duration = 607  # Assuming 'Duration (Seconds)' >= 16
-
+completed_calls_long_duration = 607  # 'Duration (Seconds)' >= 16
+muslim_voted = 247
 # Streamlit App Setup
 st.title("Phone Banking Campaign Analysis")
 
@@ -229,6 +229,14 @@ fig.add_trace(go.Funnel(
     y=["Long Duration Completed Calls"],
     x=[completed_calls_long_duration],
     text=[f"({ceil(completed_calls_long_duration / total_calls * 100)}%)"],
+    textposition="inside"
+))
+
+fig.add_trace(go.Funnel(
+    name="Called Muslims Voted",
+    y=["Called Muslims Voted"],
+    x=[muslim_voted],
+    text=[f"({ceil(muslim_voted / total_calls * 100)}%)"],
     textposition="inside"
 ))
 
