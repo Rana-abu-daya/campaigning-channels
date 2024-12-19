@@ -97,7 +97,6 @@ st.plotly_chart(fig, use_container_width=True)
 
 # Captain data
 data = {
-    'Ali H Ali': {'Total': 1, 'Voted in Nov': 0, 'Voted in Nov & Not Voted in Aug': 0},
     'Bilal Riyad': {'Total': 34, 'Voted in Nov': 27, 'Voted in Nov & Not Voted in Aug': 23},
     'Hasan Syed': {'Total': 113, 'Voted in Nov': 97, 'Voted in Nov & Not Voted in Aug': 44},
     'Husain Mohammed': {'Total': 230, 'Voted in Nov': 160, 'Voted in Nov & Not Voted in Aug': 87},
